@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotate — 帆立</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hotate.css">
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-brand" aria-label="Hotate — home">
+    <span class="nav-jp">帆立</span>
+    <span class="nav-en">hotate</span>
+  </a>
+  <div class="nav-right">
+    <div class="nav-links" aria-label="Page sections">
+      <a href="#how" class="nav-link">How</a>
+      <a href="#demo" class="nav-link">Examples</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#themes" class="nav-link">Themes</a>
+    </div>
+    <a href="#download" class="nav-btn">Free download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-kanji">帆立</div>
+  <div class="hero-lead">
+    <p class="hero-eye">帆立 — A new way to talk to your computer</p>
+    <h1 class="hero-title">Tell your computer<br>what you want.<br><em>It just does it.</em></h1>
+    <p class="hero-sub">No commands to memorize.<br>No strange symbols to type.<br><span>Free for everyone, forever.</span></p>
+  </div>
+  <div class="demo">
+    <div class="demo-dots">● ● ●</div>
+    <div class="dl"><span class="dp">~</span>福岡旅行の写真を「旅行」フォルダに移動して</div>
+    <div class="dl"><span class="dk">✓ 347 photos moved to 旅行 / Fukuoka Trip</span></div>
+    <div class="dl" style="margin-top:10px"><span class="dp">~</span>古い別府の写真を削除して</div>
+    <div class="dl">
+      <span class="dw">⚠ This will remove 89 photos (4.2 GB)</span>
+      <span class="dw">  Beppu — March 12–15, 2025</span>
+      <span class="do">[ cancel ]  [ show me first ]  [ delete ]</span>
+    </div>
+    <div class="dl" style="margin-top:10px"><span class="dp">~</span><span class="db"></span></div>
+  </div>
+  <div class="hero-btns">
+    <a href="#download" class="btn-pri">Download Hotate — it's free</a>
+    <a href="#how" class="btn-sec">See how it works ↓</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="s-label">How it works — 使い方</div>
+  <p class="how-quote r">Computers are powerful.<br>But nobody should have to<br>learn a secret language<br>just to use one.<br><br><em>Hotate</em> changes that.</p>
+  <div class="how-item r"><span class="how-n">01</span>
+    <div class="how-body"><h3>Just say what you want</h3><p>Type normally — like texting someone. "Move my Kyoto trip photos to the travel folder." "Show me what's taking up space." Hotate understands you.</p></div>
+  </div>
+  <div class="how-item r"><span class="how-n">02</span>
+    <div class="how-body"><h3>We show you before we do anything</h3><p>If something could delete files or change important things, Hotate stops and shows you exactly what will happen — in plain words. You decide.</p></div>
+  </div>
+  <div class="how-item r"><span class="how-n">03</span>
+    <div class="how-body"><h3>Free for everyone</h3><p>A student in Bangkok gets the same Hotate as anyone anywhere. No account. No payment. No limit on what it can do.</p></div>
+  </div>
+  <div class="how-item r"><span class="how-n">04</span>
+    <div class="how-body"><h3>Nothing hidden</h3><p>Hotate shows every step it takes, in plain language. You can always see what your computer is doing. No surprises, ever.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BEFORE / AFTER -->
+<section class="ba-section" id="demo">
+  <div class="s-label">Before & After — 前後</div>
+  <h2 class="ba-intro r">What changes when<br>you use <em>Hotate.</em></h2>
+  <p class="ba-sub r">Same computer. Same power.<br>No more secret language.</p>
+
+  <!-- 01 -->
+  <p class="sc-lbl">01 / 05</p>
+  <h3 class="sc-title">Sort your travel photos</h3>
+  <p class="sc-desc">You just got back from Japan and want to move 347 photos into the right folders.</p>
+  <div class="pair r">
+    <div class="cb">
+      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">You need the exact command. One wrong folder name and photos go missing.</span></div>
+      <div class="cb-body">
+        <span class="rp">$ </span><span class="rc">mv ~/Downloads/DCIM/*.jpg ~/Pictures/Japan\ Trip/</span>
+        <span class="re">mv: No such file or directory: Japan Trip</span>
+        <span class="rk">← Spaces in folder names break the command silently.</span>
+      </div>
+    </div>
+    <div class="ca">
+      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Just say where you want them.</span></div>
+      <div class="ca-body">
+        <span class="hp">~</span><span class="hc">move my Japan trip photos to the travel folder</span>
+        <span class="ho">Found 347 photos from March 2025 in Downloads...</span>
+        <span class="hk">✓ 347 photos moved to 旅行 / Japan Trip</span>
+      </div>
+    </div>
+  </div>
+  <div class="insight r"><p>Before, a space in a folder name was enough to break everything. <em>Hotate handles those details so you don't have to.</em></p></div>
+
+  <!-- 02 -->
+  <p class="sc-lbl">02 / 05</p>
+  <h3 class="sc-title">Delete photos you don't need</h3>
+  <p class="sc-desc">You want to free up space by removing blurry shots from your Beppu onsen trip.</p>
+  <div class="pair r">
+    <div class="cb">
+      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">One wrong flag and it deletes instantly. No warning, no undo.</span></div>
+      <div class="cb-body">
+        <span class="rp">$ </span><span class="rc">find ~/Pictures/Beppu -name "*.jpg" -mtime </span><span class="rf">+30</span><span class="rc"> -delete</span>
+        <span class="rk">← What does -mtime +30 mean exactly?</span>
+        <span class="rk">← Already deleted. No confirmation. No undo.</span>
+      </div>
+    </div>
+    <div class="ca">
+      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Shows you exactly what will be deleted. You choose.</span></div>
+      <div class="ca-body"><span class="hp">~</span><span class="hc">delete my old Beppu photos</span></div>
+      <div class="preview">
+        <div class="preview-title">This will remove 89 photos (4.2 GB)</div>
+        <div class="preview-body">From your Beppu folder · March 12–15, 2025<br>This cannot be undone</div>
+        <div class="preview-acts">
+          <button class="act">Cancel</button>
+          <button class="act act-ok">Show me first</button>
+          <button class="act act-del">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="insight r"><p>Before, files were gone the moment you pressed enter. <em>Hotate always shows you what will be deleted — and waits for you to say yes.</em></p></div>
+
+  <!-- 03 -->
+  <p class="sc-lbl">03 / 05</p>
+  <h3 class="sc-title">Open your food blog on your computer</h3>
+  <p class="sc-desc">You built a ramen review site and want to see how it looks before sharing it.</p>
+  <div class="pair r">
+    <div class="cb">
+      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">You need to know what kind of project it is, then remember the right command.</span></div>
+      <div class="cb-body">
+        <span class="rp">$ </span><span class="rc">cd ramen-blog && npm run dev</span>
+        <span class="re">Error: Cannot find module 'vite'</span>
+        <span class="rp">$ </span><span class="rc">npm install</span>
+        <span class="ro">added 312 packages...</span>
+        <span class="rp">$ </span><span class="rc">npm run dev</span>
+        <span class="ro">Local: http://localhost:5173/</span>
+        <span class="rk">← Three tries just to open a file.</span>
+      </div>
+    </div>
+    <div class="ca">
+      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Figures out what your project needs and opens it for you.</span></div>
+      <div class="ca-body">
+        <span class="hp">~</span><span class="hc">open my ramen blog on my computer</span>
+        <span class="ho">Found: ramen-blog — installing 2 missing things...</span>
+        <span class="hk">✓ Your blog is running — tap to open</span>
+        <span class="ho">localhost:5173</span>
+      </div>
+    </div>
+  </div>
+  <div class="insight r"><p>Before, you'd need to know the difference between npm, yarn, and python just to open a file. <em>Hotate figures that out quietly.</em></p></div>
+
+  <!-- 04 -->
+  <p class="sc-lbl">04 / 05</p>
+  <h3 class="sc-title">Rename 200 photos at once</h3>
+  <p class="sc-desc">You have Fukuoka and Kyoto photos mixed together, all named IMG_0001 to IMG_0200. You want them sorted by city.</p>
+  <div class="pair r">
+    <div class="cb">
+      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">Requires writing a script. Most people just do it by hand for hours.</span></div>
+      <div class="cb-body">
+        <span class="rp">$ </span><span class="rc">for f in Fukuoka/*.jpg; do mv "$f" "Fukuoka_$f"; done</span>
+        <span class="rk">← No preview of the new names before it runs.</span>
+        <span class="rk">← One mistake and all 200 files are named wrong.</span>
+      </div>
+    </div>
+    <div class="ca">
+      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Shows the new names before changing anything.</span></div>
+      <div class="ca-body"><span class="hp">~</span><span class="hc">rename my trip photos by city name</span></div>
+      <div class="preview">
+        <div class="preview-title">Here's what the new names will look like</div>
+        <div class="preview-body">
+          IMG_0001.jpg → Fukuoka_IMG_0001.jpg<br>
+          IMG_0002.jpg → Fukuoka_IMG_0002.jpg<br>
+          IMG_0089.jpg → Kyoto_IMG_0089.jpg<br>
+          <span style="opacity:0.4">...and 197 more</span>
+        </div>
+        <div class="preview-acts">
+          <button class="act">Cancel</button>
+          <button class="act act-ok">Rename all 200</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="insight r"><p>Before, batch renaming required knowing how to write scripts. <em>Hotate does it in one sentence, with a full preview before touching anything.</em></p></div>
+
+  <!-- 05 -->
+  <p class="sc-lbl">05 / 05</p>
+  <h3 class="sc-title">Find what's filling up your storage</h3>
+  <p class="sc-desc">Your Mac says "storage almost full." You don't know what's using it.</p>
+  <div class="pair r">
+    <div class="cb">
+      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">A wall of numbers with no explanation of what's safe to delete.</span></div>
+      <div class="cb-body">
+        <span class="rp">$ </span><span class="rc">du -sh ~/* | sort -rh | head -10</span>
+        <span class="ro">54G  /Users/dan/Library</span>
+        <span class="ro">22G  /Users/dan/Downloads</span>
+        <span class="ro">14G  /Users/dan/Pictures</span>
+        <span class="rk">← What's Library? Can I delete it? Is it safe?</span>
+      </div>
+    </div>
+    <div class="ca">
+      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Tells you what each thing is and whether it's safe to remove.</span></div>
+      <div class="ca-body"><span class="hp">~</span><span class="hc">what's taking up the most space?</span></div>
+      <div class="preview">
+        <div class="preview-title">Your biggest folders</div>
+        <div class="preview-body">
+          📥 Downloads — 22 GB — old zip files from 2024<br>
+          🌸 Pictures/Japan Trip — 14 GB — your travel photos<br>
+          🎬 Movies — 9 GB — 3 video files<br><br>
+          ⚠ System files (54 GB) — do not delete these
+        </div>
+        <div class="preview-acts">
+          <button class="act act-ok">Help me clean Downloads</button>
+          <button class="act">Show more</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="insight r"><p>Before, the numbers were there but the meaning wasn't. <em>Hotate tells you what's safe to delete and what to leave alone.</em></p></div>
+</section>
+
+<div class="divider" style="margin:0;"></div>
+
+<!-- TIERS -->
+<section class="tiers" id="pricing">
+  <div class="s-label">Pricing — 料金</div>
+  <div class="tiers-kanji">無料</div>
+  <div class="tier-cards">
+    <div class="tier-card r">
+      <span class="tier-tag">Free — 無料</span>
+      <div class="tier-name">On your computer</div>
+      <span class="tier-jp">ローカル — works offline</span>
+      <div class="tier-price">Free, forever. No account needed.</div>
+      <ul class="tier-list">
+        <li>Works without internet — nothing leaves your computer</li>
+        <li>Move, copy, delete, and organise files</li>
+        <li>Open and run programs and websites</li>
+        <li>Shows you what will happen before anything is deleted</li>
+        <li>All four visual styles included</li>
+      </ul>
+    </div>
+    <div class="tier-card featured r">
+      <span class="tier-tag">Paid — 有料</span>
+      <div class="tier-name">With the cloud</div>
+      <span class="tier-jp">クラウド — smarter tasks</span>
+      <div class="tier-price">$12 a month · $1 goes to ocean conservation</div>
+      <ul class="tier-list">
+        <li>Handle complicated tasks with many steps</li>
+        <li>Connect to and manage remote computers</li>
+        <li>Remembers what you were working on last time</li>
+        <li>"Something's broken, fix it" — and it does</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="margin:0;"></div>
+
+<!-- THEMES -->
+<section class="themes-sect" id="themes">
+  <div class="themes-inner">
+    <div class="s-label">Look & feel — テーマ</div>
+    <h2 class="themes-title r">Make it look<br>how you want.</h2>
+    <p class="themes-sub r">4 styles · more made by the community</p>
+  </div>
+  <div class="themes-scroll">
+    <div class="th-card th-hotate">
+      <div class="th-dot"></div>
+      <div class="th-name">Hotate</div>
+      <span class="th-jp">帆立 — default</span>
+      <p class="th-desc">Warm and quiet.<br>Feels like Japanese paper.</p>
+    </div>
+    <div class="th-card th-bauhaus">
+      <div class="th-bars"><span class="th-bar-r"></span><span class="th-bar-y"></span></div>
+      <div class="th-dot"></div>
+      <div class="th-name">Bauhaus</div>
+      <span class="th-jp">バウハウス</span>
+      <p class="th-desc">Bold and geometric.<br>Red, yellow, black only.</p>
+    </div>
+    <div class="th-card th-clam">
+      <div class="th-dot"></div>
+      <div class="th-name">Clam</div>
+      <span class="th-jp">ハマグリ</span>
+      <p class="th-desc">Plain and simple.<br>Gets out of the way.</p>
+    </div>
+    <div class="th-card th-cockle">
+      <div class="th-dot"></div>
+      <div class="th-name">Cockle</div>
+      <span class="th-jp">ザルガイ</span>
+      <p class="th-desc">Loud and glowing.<br>Like a sci-fi movie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OCEAN -->
+<section class="ocean">
+  <div class="ocean-kanji">海</div>
+  <div class="ocean-inner">
+    <div class="ocean-text">
+      <div class="s-label">Ocean — 海</div>
+      <h2 class="ocean-title r">We named it after a shellfish.<br>So we give back to the sea.</h2>
+      <p class="ocean-body r">Every paid subscription sends $1 straight to ocean conservation. You can see exactly how much has been donated on hotate.app — updated every month, real numbers.</p>
+    </div>
+    <div class="ocean-stat r">
+      <div class="ocean-num">$0</div>
+      <div class="ocean-lbl">donated so far<br>to Coral Restoration Foundation</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="download">
+  <div class="footer-inner">
+    <div class="footer-row">
+      <p class="footer-cta">The same power.<br><em>Finally for everyone.</em></p>
+      <a href="https://github.com/craftbydan/hotate/releases" class="footer-dl">Download Hotate — it's free</a>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/craftbydan/hotate" class="footer-link">GitHub</a>
+      <a href="https://github.com/craftbydan/hotate#readme" class="footer-link">Docs</a>
+      <a href="https://twitter.com/craftbydan" class="footer-link">Twitter</a>
+    </div>
+    <p class="footer-note">Free for everyone. Always. 帆立 © 2026</p>
+  </div>
+</footer>
+
+<script src="hotate.js" defer></script>
+</body>
+</html>
