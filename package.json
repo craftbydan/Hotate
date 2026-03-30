@@ -1,0 +1,19 @@
+{
+  "name": "hotate",
+  "private": true,
+  "type": "module",
+  "description": "Hotate landing — local static preview",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "cmdgen": "node cli/bin.mjs"
+  },
+  "bin": {
+    "hotate-cmd": "cli/bin.mjs"
+  },
+  "devDependencies": {
+    "vite": "^5.4.21"
+  }
+}
