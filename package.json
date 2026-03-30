@@ -2,18 +2,20 @@
   "name": "hotate",
   "private": true,
   "type": "module",
-  "description": "Hotate landing + CLI: hotate-cmd (shell gen), hotate-intent (sentence → file_op|run_program|install|query|delete|network)",
+  "description": "Hotate landing + CLI: hotate-cmd, hotate-intent, hotate-env (machine context: cwd, OS, PATH, installed tools)",
   "scripts": {
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "cmdgen": "node cli/bin.mjs",
-    "intent": "node cli/classify-bin.mjs"
+    "intent": "node cli/classify-bin.mjs",
+    "envctx": "node cli/context-bin.mjs"
   },
   "bin": {
     "hotate-cmd": "cli/bin.mjs",
-    "hotate-intent": "cli/classify-bin.mjs"
+    "hotate-intent": "cli/classify-bin.mjs",
+    "hotate-env": "cli/context-bin.mjs"
   },
   "devDependencies": {
     "vite": "^5.4.21"

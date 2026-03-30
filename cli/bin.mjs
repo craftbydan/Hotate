@@ -11,6 +11,10 @@ import {
   generateCommand,
   llmConfig,
 } from './lib/generate.mjs'
+import {
+  gatherMachineContext,
+  formatContextForPrompt,
+} from './lib/context-injector.mjs'
 
 function printHelp() {
   console.log(`
@@ -23,6 +27,8 @@ Usage:
 Options:
   -c, --context <text>   Extra context (cwd, files, constraints)
   -f, --file <path>      Read more context from file (utf-8)
+      --env              Inject machine context (cwd, OS, PATH summary, CLI tools)
+      --env-fast         With --env: skip version subprocesses (faster)
   -O, --os <auto|macos|linux>   Target OS (default: auto from this machine)
   -e, --explain          Ask model to add a # comment line before the command
       --json             Print JSON { "os", "intent", "command" }
@@ -39,6 +45,8 @@ Examples:
   hotate-cmd "compress ~/Documents/photos into a zip excluding raw"
   hotate-cmd -c "repo has package.json" "install deps and run tests"
   hotate-cmd -O linux "watch a log file for errors and beep once"
+  hotate-cmd --env "install ffmpeg if missing"   # injects cwd, PATH, brew/node/python…
+  npm run envctx -- --json > machine.json        # inspect context only
 `.trim())
 }
 
@@ -58,6 +66,8 @@ async function main() {
       os: { type: 'string', short: 'O', default: 'auto' },
       explain: { type: 'boolean', short: 'e', default: false },
       json: { type: 'boolean', default: false },
+      env: { type: 'boolean', default: false },
+      'env-fast': { type: 'boolean', default: false },
       help: { type: 'boolean', short: 'h', default: false },
     },
     allowPositionals: true,
@@ -80,6 +90,11 @@ async function main() {
   }
 
   let context = values.context || ''
+  if (values.env) {
+    const ctx = gatherMachineContext({ versions: !values['env-fast'] })
+    const block = formatContextForPrompt(ctx)
+    context = context ? `${block}\n\n${context}` : block
+  }
   if (values.file) {
     try {
       const extra = await readFile(values.file, 'utf8')
