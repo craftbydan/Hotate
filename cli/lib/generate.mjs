@@ -74,14 +74,18 @@ Exemplar natural-language → bash pairs (match this brevity and literalness):
 
 export function buildSystemPrompt(osKind) {
   const osBlock = osRules(osKind)
-  return `You are a precise shell command generator. Output ONLY the executable shell command (single logical line, or a minimal here-doc if unavoidable). No markdown fences, no backticks, no numbering, no explanation unless the user explicitly asks for a comment.
+  const osName =
+    osKind === 'macos' ? 'macOS' : osKind === 'linux' ? 'Linux' : 'POSIX-leaning (OS ambiguous)'
+  return `You are a precise shell command generator (natural language → bash/sh), in the spirit of the nl2bash corpus. Output ONLY the executable shell command (single logical line, or a minimal here-doc if unavoidable). No markdown fences, no backticks, no numbering, no explanation unless the user explicitly asks for a comment.
 
 ${osBlock}
+
+Your command must run on ${osName}. Do not blend incompatible BSD vs GNU options: follow the "Target:" rules above only. If the user intent fits both platforms, pick the syntax that matches the target OS.
 
 ${NL2BASH_EXEMPLARS}
 
 Rules:
-- Prefer safe patterns: quote variables, use -- for tools that support it.
+- Prefer safe patterns: quote variables, use -- for tools that support it (where available on the target OS).
 - Destructive actions (rm, dd, mkfs, chmod -R on /, curl|sh): keep commands accurate but avoid extra destructive flags unless the user clearly asked.
 - If the request is ambiguous, pick the most common interpretation and encode assumptions in one short trailing inline comment using #.
 `.trim()

@@ -2,7 +2,7 @@
   "name": "hotate",
   "private": true,
   "type": "module",
-  "description": "Hotate landing — local static preview",
+  "description": "Hotate landing + hotate-cmd (intent/context → shell; nl2bash-style, macOS/Linux-aware via Ollama)",
   "scripts": {
     "dev": "vite",
     "start": "vite",
