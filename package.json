@@ -2,16 +2,18 @@
   "name": "hotate",
   "private": true,
   "type": "module",
-  "description": "Hotate landing + hotate-cmd (intent/context → shell; nl2bash-style, macOS/Linux-aware via Ollama)",
+  "description": "Hotate landing + CLI: hotate-cmd (shell gen), hotate-intent (sentence → file_op|run_program|install|query|delete|network)",
   "scripts": {
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "cmdgen": "node cli/bin.mjs"
+    "cmdgen": "node cli/bin.mjs",
+    "intent": "node cli/classify-bin.mjs"
   },
   "bin": {
-    "hotate-cmd": "cli/bin.mjs"
+    "hotate-cmd": "cli/bin.mjs",
+    "hotate-intent": "cli/classify-bin.mjs"
   },
   "devDependencies": {
     "vite": "^5.4.21"
