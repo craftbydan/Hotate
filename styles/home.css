@@ -276,6 +276,51 @@
   border-radius: 4px;
   white-space: nowrap;
 }
+
+/* Dev docs — responsive two-column callouts */
+.dev-docs-cap-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+@media (min-width: 720px) {
+  .dev-docs-cap-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.dev-docs-cta-row {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .dev-docs-cta-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+.dev-docs-fork-row {
+  margin-top: 32px;
+  margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .dev-docs-fork-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+}
 .hero-btns { display:flex; flex-direction:column; gap:10px; opacity:0; animation: fadeUp 0.8s ease 0.7s forwards; }
 .btn-pri { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 15px 20px; text-align: center; text-decoration: none; display: block; border-radius: 2px; }
 .btn-sec { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; text-align: center; display: block; padding: 13px; border: 1px solid var(--line); border-radius: 2px; opacity: 0.5; }

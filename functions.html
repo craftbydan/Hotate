@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hotate Functions</title>
-<meta name="description" content="Hotate native agent functions">
+<title>Hotate — Developer documentation</title>
+<meta name="description" content="Hotate architecture, agent tools, local setup, and roadmap for contributors.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="hotate.css">
@@ -17,6 +17,7 @@
     <span class="nav-en">hotate</span>
   </a>
   <div class="nav-right">
+    <a href="/functions.html" class="nav-doc-mobile" aria-label="Developer documentation">Docs</a>
     <div class="nav-links" aria-label="Page sections">
       <a href="/functions.html" class="nav-link">Dev Docs</a>
       <a href="/#how" class="nav-link">How</a>
@@ -34,9 +35,19 @@
     <h2 class="try-heading r on" style="font-size: clamp(32px, 5vw, 44px); margin-bottom: 16px;">Developer Documentation</h2>
     <p class="try-lead r on" style="max-width: 600px">Hotate uses a multi-turn LLM agent capable of calling native tools. This guide explains the architecture, specs, and current limitations so you can understand, fork, and build upon it.</p>
     
-    <div style="margin-top: 32px; margin-bottom: 48px; display: flex; gap: 16px;" class="r on">
-      <a href="https://github.com/craftbydan/Hotate" target="_blank" class="btn-pri" style="background: #24292e; color: #fff;">Fork on GitHub</a>
-      <span style="font-size: 13px; color: var(--rust); padding: 15px 0; font-family: 'DM Mono', monospace; font-weight: 500;">Phase 1: Local File Operations (3 more phases planned)</span>
+    <div class="r on dev-docs-fork-row">
+      <a href="https://github.com/craftbydan/Hotate" target="_blank" rel="noopener noreferrer" class="btn-pri" style="background: #24292e; color: #fff;">Fork on GitHub</a>
+      <span style="font-size: 13px; color: var(--rust); font-family: 'DM Mono', monospace; font-weight: 500; line-height: 1.5;">Phase 1: local agent + native read-only tools + guarded shell proposals. Phases 2–4 are planned.</span>
+    </div>
+
+    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 24px;" class="r on">Product roadmap (dev phases)</h3>
+    <div class="insight r on" style="margin-bottom: 48px; background: rgba(255, 255, 255, 0.4); border-color: var(--line);">
+      <ol style="padding-left: 20px; font-size: 14px; line-height: 1.85; color: rgba(24, 20, 15, 0.82); margin-bottom: 0;">
+        <li><strong>Phase 1 (current)</strong> — Multi-turn Ollama agent with JSON tool calling: list directory, file preview, disk stats, and <code>propose_shell_command</code> after the model has enough context. Electron menubar + Vite web shell; planner invoked from CLI and from <code>vite</code> dev middleware at <code>POST /api/plan</code>.</li>
+        <li><strong>Phase 2 (planned)</strong> — Richer read-only tools (search, metadata, git status/diff previews), tighter command normalization, and stronger destructive-action classification.</li>
+        <li><strong>Phase 3 (planned)</strong> — Optional cloud-backed model routing and session memory (aligned with the paid tier story on the main site).</li>
+        <li><strong>Phase 4 (planned)</strong> — Remote machine workflows, automation recipes, and long-running task orchestration.</li>
+      </ol>
     </div>
 
     <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 24px;" class="r on">Tech Stack & Architecture</h3>
@@ -46,8 +57,91 @@
         <li><strong>Desktop App</strong>: Electron with <code>menubar</code>. Transparent frameless windows.</li>
         <li><strong>LLM Backend</strong>: Local Ollama API (<code>/api/chat</code>). Default model runs entirely offline.</li>
         <li><strong>Native Bridge</strong>: Node.js standard libraries (<code>fs/promises</code>, <code>child_process</code>, <code>os</code>).</li>
-        <li><strong>Communication</strong>: Standard Electron IPC (Inter-Process Communication) bridging the renderer and main processes.</li>
+        <li><strong>Communication</strong>: Electron IPC between renderer and main; the web try-chat uses <code>fetch('/api/plan')</code> only when you run Vite locally (static hosts serve HTML without that API).</li>
       </ul>
+    </div>
+
+    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 24px;" class="r on">Runtime specification</h3>
+    <div class="functions-table-wrap r on" style="margin-bottom: 48px">
+      <table class="functions-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Value / notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>LLM API</code></td>
+            <td>Ollama <code>POST /api/chat</code> with <code>tools</code> array (native tool calling). Default host <code>http://127.0.0.1:11434</code>.</td>
+          </tr>
+          <tr>
+            <td><code>Default model</code></td>
+            <td><code>qwen2.5:0.5b</code> unless overridden by <code>HOTATE_LLM_MODEL</code>. Pull with <code>ollama pull qwen2.5:0.5b</code>.</td>
+          </tr>
+          <tr>
+            <td><code>Env overrides</code></td>
+            <td><code>HOTATE_OLLAMA_URL</code> or <code>OLLAMA_HOST</code> for base URL; <code>HOTATE_NUM_PREDICT</code> caps generation length (see <code>cli/lib/generate.mjs</code> → <code>llmConfig()</code>).</td>
+          </tr>
+          <tr>
+            <td><code>Agent loop</code></td>
+            <td>Up to 7 turns (<code>MAX_TURNS</code> in <code>cli/lib/agent.mjs</code>); temperature <code>0.1</code> for the agent chat request.</td>
+          </tr>
+          <tr>
+            <td><code>Working directory</code></td>
+            <td>CLI and menubar pass a workspace path; read-only tools resolve relative paths against that cwd. Shell proposals are still user-approved before execution.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 24px;" class="r on">Repository map (start here)</h3>
+    <div class="functions-table-wrap r on" style="margin-bottom: 32px">
+      <table class="functions-table">
+        <thead>
+          <tr>
+            <th>Path</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>cli/lib/agent.mjs</code></td>
+            <td>Multi-turn loop: Ollama chat, tool dispatch, final chat vs shell proposal.</td>
+          </tr>
+          <tr>
+            <td><code>cli/lib/agent-tools.mjs</code></td>
+            <td>Ollama tool schemas + Node implementations (<code>list_directory</code>, <code>read_file_preview</code>, <code>get_disk_space</code>).</td>
+          </tr>
+          <tr>
+            <td><code>cli/lib/run-pipeline.mjs</code></td>
+            <td>Wires user intent into <code>runAgentLoop</code> and normalizes output for the UI/CLI.</td>
+          </tr>
+          <tr>
+            <td><code>cli/bin.mjs</code></td>
+            <td>CLI entry used by <code>npm run cmdgen</code> and by Vite’s <code>/api/plan</code> middleware.</td>
+          </tr>
+          <tr>
+            <td><code>vite.config.js</code></td>
+            <td>Multi-page build (<code>index.html</code>, <code>functions.html</code>, <code>app.html</code>) + dev-only <code>/api/plan</code> bridge.</td>
+          </tr>
+          <tr>
+            <td><code>menubar/main.cjs</code></td>
+            <td>Electron main: tray window, folder picker, IPC to run the planner against the selected workspace.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 16px;" class="r on">Run from source (minimal)</h3>
+    <div class="insight r on" style="margin-bottom: 48px; background: rgba(255, 255, 255, 0.4); border-color: var(--line);">
+      <ol style="padding-left: 20px; font-size: 14px; line-height: 1.85; color: rgba(24, 20, 15, 0.82); margin-bottom: 0;">
+        <li>Install <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a> and run <code>ollama pull qwen2.5:0.5b</code> (or set <code>HOTATE_LLM_MODEL</code> to a model you already have).</li>
+        <li>Clone the repo, then <code>npm install</code> at the repo root.</li>
+        <li>Web + API: <code>npm run dev</code> — this repo uses port <code>3000</code> by default (<code>vite.config.js</code>). Try-chat and planner need this dev server; a static host serves HTML only unless you wire <code>POST /api/plan</code> yourself.</li>
+        <li>CLI smoke test: <code>npm run cmdgen</code> with flags you use in CI (see <code>cli/bin.mjs</code> <code>--help</code>).</li>
+        <li>Menubar app: <code>npm run menubar</code> (requires Electron deps installed).</li>
+      </ol>
     </div>
     
     <div class="insight r on" style="margin-top: 48px; margin-bottom: 48px; background: rgba(24, 20, 15, 0.03); border-color: var(--ink);">
@@ -56,7 +150,7 @@
       
       <div style="background: rgba(255, 255, 255, 0.6); padding: 24px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 24px; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--ink);">
         <pre style="margin: 0; white-space: pre-wrap; word-break: break-word;">
-User Input -> [LLM Agent]
+User Input -&gt; [LLM Agent]
                  |
                  v
          Needs Context?
@@ -71,7 +165,7 @@ Call Read Tool    Propose Action
  Native Node.js     User UI Preview
  Tool Execution     Accept/Reject
        |                |
-       +-------<--------+
+       +-------&lt;--------+
        (loop)
         </pre>
       </div>
@@ -132,7 +226,7 @@ Call Read Tool    Propose Action
 
     <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-top: 48px; margin-bottom: 24px;" class="r on">Capabilities & Limitations</h3>
     
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px;" class="r on">
+    <div class="r on dev-docs-cap-grid">
       <div style="background: rgba(46, 107, 62, 0.05); border: 1px solid rgba(46, 107, 62, 0.2); padding: 24px; border-radius: 8px;">
         <h4 style="font-family: 'Noto Serif JP', serif; font-weight: 400; font-size: 16px; color: rgba(46, 107, 62, 1); margin-bottom: 12px;">What works 100%</h4>
         <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: var(--ink); margin-bottom: 0;">
@@ -154,7 +248,7 @@ Call Read Tool    Propose Action
       </div>
     </div>
 
-    <div class="try-cta-row r on" style="margin-top: 48px; display: flex; flex-direction: row; align-items: center; gap: 24px;">
+    <div class="try-cta-row r on dev-docs-cta-row" style="margin-top: 48px;">
       <a href="/#download" class="btn-pri try-cta-btn">Download Hotate</a>
       <a href="/" style="color: var(--rust); font-size: 13px; font-weight: 500; text-decoration: none;">← Back to Home</a>
     </div>

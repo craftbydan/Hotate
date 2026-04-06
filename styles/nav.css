@@ -14,6 +14,22 @@ nav {
 .nav-jp  { font-family: 'Noto Serif JP', serif; font-weight: 200; font-size: 16px; color: var(--rust); }
 .nav-en  { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.22em; color: var(--ink); opacity: 0.30; text-transform: uppercase; }
 .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+/* Shown only under 900px — full "Dev Docs" lives in .nav-links on wide screens */
+.nav-doc-mobile {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  opacity: 0.55;
+  padding: 8px 4px;
+  white-space: nowrap;
+}
+.nav-doc-mobile:hover { opacity: 1; }
+@media (min-width: 900px) {
+  .nav-doc-mobile { display: none; }
+}
 .nav-links { display: none; align-items: center; gap: clamp(16px, 2.5vw, 28px); }
 .nav-link {
   font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
