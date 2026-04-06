@@ -99,6 +99,7 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'index.html'),
         app: path.resolve(__dirname, 'app.html'),
+        functions: path.resolve(__dirname, 'functions.html'),
       },
     },
   },

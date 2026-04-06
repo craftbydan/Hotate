@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotate Functions</title>
+<meta name="description" content="Hotate native agent functions">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hotate.css">
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand" aria-label="Hotate — home">
+    <span class="nav-jp">帆立</span>
+    <span class="nav-en">hotate</span>
+  </a>
+  <div class="nav-right">
+    <div class="nav-links" aria-label="Page sections">
+      <a href="/#how" class="nav-link">How</a>
+      <a href="/#demo" class="nav-link">Stories</a>
+      <a href="/#pricing" class="nav-link">Pricing</a>
+    </div>
+    <a href="/#download" class="nav-btn">Download</a>
+  </div>
+</nav>
+
+<section class="try-sect" style="min-height: 100svh; background: var(--paper);">
+  <div class="try-max" style="padding-top: 40px">
+    <div class="s-label" style="opacity: 1">Functions — 機能</div>
+    <h2 class="try-heading r on" style="font-size: clamp(32px, 5vw, 44px); margin-bottom: 16px;">Native Agent Functions</h2>
+    <p class="try-lead r on" style="max-width: 600px">Hotate uses a multi-turn LLM agent capable of calling native tools. Here are the core functions the agent can run securely on your machine today:</p>
+    
+    <div class="functions-table-wrap r on" style="margin-top: 48px">
+      <table class="functions-table">
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Description</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>list_directory</code></td>
+            <td>Inspects the filesystem natively to see what files or folders exist before writing commands.</td>
+            <td><span class="chat-pill chat-pill-secondary" style="margin:0; border:0; display:inline-block">Read-Only</span></td>
+          </tr>
+          <tr>
+            <td><code>read_file_preview</code></td>
+            <td>Reads the first N lines of a file to figure out its structure and contents safely.</td>
+            <td><span class="chat-pill chat-pill-secondary" style="margin:0; border:0; display:inline-block">Read-Only</span></td>
+          </tr>
+          <tr>
+            <td><code>get_disk_space</code></td>
+            <td>Checks available and total disk space using native filesystem statistics.</td>
+            <td><span class="chat-pill chat-pill-secondary" style="margin:0; border:0; display:inline-block">Read-Only</span></td>
+          </tr>
+          <tr>
+            <td><code>propose_shell_command</code></td>
+            <td>Proposes a shell command to execute based on intent. Triggers the interactive pre-flight UI before any changes are made.</td>
+            <td><span class="chat-pill chat-pill-primary" style="margin:0; border:0; display:inline-block">Action</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="try-cta-row r on" style="margin-top: 48px; display: flex; flex-direction: row; align-items: center; gap: 24px;">
+      <a href="/#download" class="btn-pri try-cta-btn">Download Hotate</a>
+      <a href="/" style="color: var(--rust); font-size: 13px; font-weight: 500; text-decoration: none;">← Back to Home</a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
