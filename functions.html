@@ -31,13 +31,51 @@
 <section class="try-sect" style="min-height: 100svh; background: var(--paper); padding-bottom: 96px;">
   <div class="try-max" style="padding-top: 40px; max-width: 900px">
     <div class="s-label" style="opacity: 1">Functions — 機能</div>
-    <h2 class="try-heading r on" style="font-size: clamp(32px, 5vw, 44px); margin-bottom: 16px;">Native Agent Functions</h2>
-    <p class="try-lead r on" style="max-width: 600px">Hotate uses a multi-turn LLM agent capable of calling native tools. Here is how the agent works under the hood and the core functions it can run securely on your machine today.</p>
+    <h2 class="try-heading r on" style="font-size: clamp(32px, 5vw, 44px); margin-bottom: 16px;">Developer Documentation</h2>
+    <p class="try-lead r on" style="max-width: 600px">Hotate uses a multi-turn LLM agent capable of calling native tools. This guide explains the architecture, specs, and current limitations so you can understand, fork, and build upon it.</p>
+    
+    <div style="margin-top: 32px; margin-bottom: 48px; display: flex; gap: 16px;" class="r on">
+      <a href="https://github.com/craftbydan/Hotate" target="_blank" class="btn-pri" style="background: #24292e; color: #fff;">Fork on GitHub</a>
+      <span style="font-size: 13px; color: var(--rust); padding: 15px 0; font-family: 'DM Mono', monospace; font-weight: 500;">Phase 1: Local File Operations (3 more phases planned)</span>
+    </div>
+
+    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 24px;" class="r on">Tech Stack & Architecture</h3>
+    <div class="insight r on" style="margin-bottom: 48px; background: rgba(255, 255, 255, 0.4); border-color: var(--line);">
+      <ul style="padding-left: 20px; font-size: 14px; line-height: 1.8; color: rgba(24, 20, 15, 0.8); margin-bottom: 0;">
+        <li><strong>Frontend</strong>: Plain HTML/CSS/JS bundled with Vite. No React/Vue overhead.</li>
+        <li><strong>Desktop App</strong>: Electron with <code>menubar</code>. Transparent frameless windows.</li>
+        <li><strong>LLM Backend</strong>: Local Ollama API (<code>/api/chat</code>). Default model runs entirely offline.</li>
+        <li><strong>Native Bridge</strong>: Node.js standard libraries (<code>fs/promises</code>, <code>child_process</code>, <code>os</code>).</li>
+        <li><strong>Communication</strong>: Standard Electron IPC (Inter-Process Communication) bridging the renderer and main processes.</li>
+      </ul>
+    </div>
     
     <div class="insight r on" style="margin-top: 48px; margin-bottom: 48px; background: rgba(24, 20, 15, 0.03); border-color: var(--ink);">
-      <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 18px; color: var(--ink); margin-bottom: 12px;">The Agent Loop</h3>
+      <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 18px; color: var(--ink); margin-bottom: 12px;">The Agent Loop Flowchart</h3>
       <p style="font-size: 14px; line-height: 1.8; color: rgba(24, 20, 15, 0.7); margin-bottom: 16px;">When a user asks Hotate to do something, it doesn't just blindly generate a shell script. Instead, the language model operates in a loop:</p>
       
+      <div style="background: rgba(255, 255, 255, 0.6); padding: 24px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 24px; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--ink);">
+        <pre style="margin: 0; white-space: pre-wrap; word-break: break-word;">
+User Input -> [LLM Agent]
+                 |
+                 v
+         Needs Context?
+        /              \
+     [YES]            [NO]
+       |                |
+       v                v
+Call Read Tool    Propose Action
+(e.g., ls, df)    (e.g., rm, mv)
+       |                |
+       v                v
+ Native Node.js     User UI Preview
+ Tool Execution     Accept/Reject
+       |                |
+       +-------<--------+
+       (loop)
+        </pre>
+      </div>
+
       <div style="background: rgba(255, 255, 255, 0.6); padding: 16px 20px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 24px; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--ink);">
         <div style="margin-bottom: 8px; color: var(--rust);"><strong>[Turn 1] User Intent</strong>: "Delete all the heavy log files in this folder"</div>
         <div style="margin-bottom: 8px;"><strong>LLM Thought</strong>: I need to see what files exist and how big they are first.</div>
@@ -56,7 +94,7 @@
       </ol>
     </div>
 
-    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 24px;" class="r on">Available Tools</h3>
+    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 24px;" class="r on">Available Native Tools</h3>
 
     <div class="functions-table-wrap r on" style="margin-top: 0">
       <table class="functions-table">
@@ -90,6 +128,30 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-top: 48px; margin-bottom: 24px;" class="r on">Capabilities & Limitations</h3>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px;" class="r on">
+      <div style="background: rgba(46, 107, 62, 0.05); border: 1px solid rgba(46, 107, 62, 0.2); padding: 24px; border-radius: 8px;">
+        <h4 style="font-family: 'Noto Serif JP', serif; font-weight: 400; font-size: 16px; color: rgba(46, 107, 62, 1); margin-bottom: 12px;">What works 100%</h4>
+        <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: var(--ink); margin-bottom: 0;">
+          <li>Listing files and reading short text previews.</li>
+          <li>Checking disk space availability.</li>
+          <li>Basic file operations (mv, rm, cp) within the selected context folder.</li>
+          <li>Intercepting destructive commands to show UI previews.</li>
+        </ul>
+      </div>
+      
+      <div style="background: rgba(124, 59, 30, 0.05); border: 1px solid rgba(124, 59, 30, 0.2); padding: 24px; border-radius: 8px;">
+        <h4 style="font-family: 'Noto Serif JP', serif; font-weight: 400; font-size: 16px; color: var(--rust); margin-bottom: 12px;">What it can't do well (Yet)</h4>
+        <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: var(--ink); margin-bottom: 0;">
+          <li>Long-running processes (like starting dev servers).</li>
+          <li>Interactive shell commands (vim, top).</li>
+          <li>Cross-directory complex operations involving deep sub-folders not explicitly listed.</li>
+          <li>Heavy fuzzy searching (relies on LLM guessing names based on ls output).</li>
+        </ul>
+      </div>
     </div>
 
     <div class="try-cta-row r on" style="margin-top: 48px; display: flex; flex-direction: row; align-items: center; gap: 24px;">
