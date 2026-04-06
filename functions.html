@@ -141,6 +141,8 @@
         <li>Web + API: <code>npm run dev</code> — this repo uses port <code>3000</code> by default (<code>vite.config.js</code>). Try-chat and planner need this dev server; a static host serves HTML only unless you wire <code>POST /api/plan</code> yourself.</li>
         <li>CLI smoke test: <code>npm run cmdgen</code> with flags you use in CI (see <code>cli/bin.mjs</code> <code>--help</code>).</li>
         <li>Menubar app: <code>npm run menubar</code> (requires Electron deps installed).</li>
+        <li><strong>macOS DMG (distribution)</strong>: <code>npm run bundle:ollama</code> downloads the official Ollama CLI into <code>build/bundled/ollama/</code>, then <code>npm run menubar:pack</code> runs <code>electron-builder</code> and writes <code>release/</code> (DMG + zip + auto-update metadata). Tag a release as <code>v0.1.0</code> (match <code>package.json</code> version) and push the tag to run the GitHub Action that publishes to Releases; the packaged app checks for updates from there.</li>
+        <li><strong>Models</strong>: The DMG includes the Ollama <em>runtime</em> (CLI + libraries). The default model (<code>qwen2.5:0.5b</code>) is pulled automatically on first launch if missing (one-time download, requires internet). Shipping multi‑GB weights inside the DMG is possible but not wired yet—use CI to attach blobs if you need fully offline installs.</li>
       </ol>
     </div>
     

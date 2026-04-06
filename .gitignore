@@ -1,3 +1,7 @@
 .DS_Store
 node_modules/
 dist/
+release/
+# Downloaded Ollama CLI bundle (see npm run bundle:ollama); keep folder via .gitkeep
+build/bundled/ollama/**
+!build/bundled/ollama/.gitkeep

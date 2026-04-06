@@ -25,6 +25,18 @@
   </button>
 </header>
 
+<div id="menubar-setup-banner" class="menubar-setup-banner" hidden role="status" aria-live="polite">
+  <div class="menubar-setup-inner">
+    <p class="menubar-setup-title" id="menubar-setup-title">Setting up Hotate</p>
+    <p class="menubar-setup-msg" id="menubar-setup-msg"></p>
+    <div class="menubar-setup-progress" id="menubar-setup-progress" hidden>
+      <div class="menubar-setup-progress-track" aria-hidden="true">
+        <div class="menubar-setup-progress-bar" id="menubar-setup-progress-bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <main class="menubar-main-container">
   <!-- Chat View -->
   <div class="menubar-view is-active" id="chat-view">
@@ -59,7 +71,17 @@
           <span class="menubar-context-val" id="ollama-status">Checking...</span>
           <button id="start-ollama-btn" class="menubar-mini-btn" style="display:none">Start</button>
         </div>
+        <p class="menubar-path-lead" id="ollama-endpoint-hint" style="margin-top:6px;display:none"></p>
       </div>
+
+      <div class="menubar-settings-title" style="margin-top:16px">Updates</div>
+      <p class="menubar-path-lead">Shipped builds check GitHub when you open Hotate. Install only comes from a published release.</p>
+      <div class="menubar-update-actions">
+        <button type="button" id="check-updates-btn" class="menubar-mini-btn">Check for updates</button>
+        <button type="button" id="download-update-btn" class="menubar-mini-btn" style="display:none">Download update</button>
+        <button type="button" id="install-update-btn" class="menubar-mini-btn menubar-mini-btn-primary" style="display:none">Restart &amp; install</button>
+      </div>
+      <p class="menubar-update-status" id="update-status-line"></p>
       
       <div class="menubar-settings-title" style="margin-top:16px">Theme</div>
       <div class="menubar-theme-grid">
@@ -82,9 +104,9 @@
       </div>
 
       <div class="menubar-settings-actions">
-        <button id="update-btn" class="menubar-action-btn">
+        <button id="update-btn" class="menubar-action-btn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
-          Reload App
+          Reload window
         </button>
         <button id="quit-btn" class="menubar-action-btn is-danger">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
@@ -211,6 +233,16 @@
       ollamaStatus.innerText = ctx.ollama ? 'Running' : 'Offline';
       ollamaStatus.className = ctx.ollama ? 'menubar-context-val is-online' : 'menubar-context-val is-offline';
       startOllamaBtn.style.display = ctx.ollama ? 'none' : 'inline-block';
+
+      if (ollamaEndpointHint) {
+        if (ctx.bundledOllama && ctx.ollamaUrl) {
+          ollamaEndpointHint.style.display = 'block';
+          ollamaEndpointHint.textContent = `Bundled engine at ${ctx.ollamaUrl} (isolated from a system Ollama install).`;
+        } else {
+          ollamaEndpointHint.style.display = 'none';
+          ollamaEndpointHint.textContent = '';
+        }
+      }
       
       // If thread is empty or folder changed, add a welcome message
       const thread = document.querySelector('[data-app-thread]');
@@ -260,10 +292,97 @@
 
   const updateBtn = document.getElementById('update-btn');
   updateBtn.onclick = () => {
-    if (window.hotate && window.hotate.update) {
-      window.hotate.update();
+    if (window.hotate && window.hotate.reloadWindow) {
+      window.hotate.reloadWindow();
     }
   };
+
+  /* First-run: bundled Ollama + model pull */
+  const setupBanner = document.getElementById('menubar-setup-banner');
+  const setupTitle = document.getElementById('menubar-setup-title');
+  const setupMsg = document.getElementById('menubar-setup-msg');
+  const setupProg = document.getElementById('menubar-setup-progress');
+  const setupProgBar = document.getElementById('menubar-setup-progress-bar');
+  const ollamaEndpointHint = document.getElementById('ollama-endpoint-hint');
+
+  if (window.hotate && window.hotate.onSetup) {
+    window.hotate.onSetup((p) => {
+      if (!setupBanner || !setupTitle || !setupMsg) return;
+      const phase = p && p.phase;
+      if (phase === 'done' || phase === 'error') {
+        setupBanner.hidden = phase === 'done';
+        if (phase === 'error') {
+          setupTitle.textContent = 'Setup needs attention';
+          setupMsg.textContent = p.message || '';
+          setupProg.hidden = true;
+        }
+        return;
+      }
+      setupBanner.hidden = false;
+      if (phase === 'pull' && p.message && /pulling|%\s|MiB|GB/i.test(p.message)) {
+        setupTitle.textContent = 'Downloading model';
+        setupMsg.textContent = p.message;
+        setupProg.hidden = false;
+      } else {
+        setupTitle.textContent = 'Setting up Hotate';
+        setupMsg.textContent = p.message || '';
+        setupProg.hidden = phase !== 'pull';
+      }
+    });
+  }
+
+  const checkUpdatesBtn = document.getElementById('check-updates-btn');
+  const downloadUpdateBtn = document.getElementById('download-update-btn');
+  const installUpdateBtn = document.getElementById('install-update-btn');
+  const updateStatusLine = document.getElementById('update-status-line');
+
+  function setUpdateStatus(t) {
+    if (updateStatusLine) updateStatusLine.textContent = t || '';
+  }
+
+  if (window.hotate && window.hotate.onUpdateEvent) {
+    window.hotate.onUpdateEvent((ev) => {
+      if (!ev || !ev.type) return;
+      if (ev.type === 'checking') setUpdateStatus('Checking for updates…');
+      if (ev.type === 'available') {
+        setUpdateStatus(`Update available: v${ev.version || ''}`);
+        if (downloadUpdateBtn) downloadUpdateBtn.style.display = 'inline-block';
+      }
+      if (ev.type === 'not-available') setUpdateStatus('You’re on the latest release.');
+      if (ev.type === 'error') setUpdateStatus(ev.message || 'Update check failed');
+      if (ev.type === 'progress') {
+        const pct = typeof ev.percent === 'number' ? Math.round(ev.percent) : 0;
+        setUpdateStatus(`Downloading… ${pct}%`);
+      }
+      if (ev.type === 'downloaded') {
+        setUpdateStatus('Ready to install. Restart to finish.');
+        if (installUpdateBtn) installUpdateBtn.style.display = 'inline-block';
+        if (downloadUpdateBtn) downloadUpdateBtn.style.display = 'none';
+      }
+    });
+  }
+
+  if (checkUpdatesBtn && window.hotate && window.hotate.checkForUpdates) {
+    checkUpdatesBtn.onclick = async () => {
+      setUpdateStatus('Checking…');
+      if (downloadUpdateBtn) downloadUpdateBtn.style.display = 'none';
+      if (installUpdateBtn) installUpdateBtn.style.display = 'none';
+      const r = await window.hotate.checkForUpdates();
+      if (r && r.skipped) {
+        setUpdateStatus(r.reason === 'development_build' ? 'Updates run in the packaged app only.' : 'Update check skipped.');
+      }
+    };
+  }
+  if (downloadUpdateBtn && window.hotate && window.hotate.downloadUpdate) {
+    downloadUpdateBtn.onclick = async () => {
+      setUpdateStatus('Downloading…');
+      const r = await window.hotate.downloadUpdate();
+      if (r && !r.ok) setUpdateStatus(r.error || 'Download failed');
+    };
+  }
+  if (installUpdateBtn && window.hotate && window.hotate.quitAndInstall) {
+    installUpdateBtn.onclick = () => window.hotate.quitAndInstall();
+  }
 
   const quitBtn = document.getElementById('quit-btn');
   quitBtn.onclick = () => {

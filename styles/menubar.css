@@ -16,6 +16,8 @@ body.menubar-body.app-body {
   overflow: hidden;
   color: var(--mb-text);
   background: var(--mb-panel) !important;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Theme definitions for the menubar */
@@ -359,6 +361,75 @@ body.menubar-body[data-theme="cockle"] {
   opacity: 0.5;
   cursor: default;
 }
+.menubar-mini-btn-primary {
+  background: color-mix(in srgb, var(--mb-accent) 88%, #000);
+  border-color: var(--mb-accent);
+}
+.menubar-update-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.menubar-update-actions .menubar-mini-btn {
+  margin-left: 0;
+}
+.menubar-update-status {
+  font-size: 10px;
+  color: var(--mb-muted);
+  margin: 8px 0 0;
+  line-height: 1.45;
+  min-height: 1.2em;
+}
+
+.menubar-setup-banner {
+  flex-shrink: 0;
+  padding: 8px 14px 10px;
+  margin: 0;
+  border-bottom: 1px solid var(--mb-sep);
+  background: color-mix(in srgb, var(--mb-accent) 10%, var(--mb-panel));
+}
+.menubar-setup-title {
+  font-family: var(--mb-serif, var(--mb-sans));
+  font-size: 11px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--mb-text);
+}
+.menubar-setup-msg {
+  font-size: 10px;
+  line-height: 1.45;
+  color: var(--mb-muted);
+  margin: 0;
+  max-height: 64px;
+  overflow-y: auto;
+  word-break: break-word;
+}
+.menubar-setup-progress {
+  margin-top: 8px;
+}
+.menubar-setup-progress-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--mb-sep);
+  overflow: hidden;
+}
+.menubar-setup-progress-bar {
+  height: 100%;
+  width: 35%;
+  background: var(--mb-accent);
+  border-radius: 2px;
+  animation: menubar-setup-indeterminate 1.1s ease-in-out infinite;
+}
+@keyframes menubar-setup-indeterminate {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
 .menubar-theme-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

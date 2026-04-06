@@ -1,0 +1,47 @@
+# macOS menubar app — run `npm run bundle:ollama` before packaging for bundled Ollama CLI.
+# Releases: push a git tag; GitHub Action runs electron-builder --publish always (needs GH_TOKEN).
+
+appId: com.craftbydan.hotate
+productName: Hotate
+copyright: Copyright © 2026 Dan / craftbydan
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - package.json
+  - menubar/**/*
+  - cli/**/*
+  - hotate.css
+  - styles/**/*
+  - "!**/*.{md,ts,map}"
+
+asar: true
+
+extraResources:
+  - from: build/bundled/ollama
+    to: bundled/ollama
+
+mac:
+  category: public.app-category.productivity
+  target:
+    - dmg
+    - zip
+  darkModeSupport: true
+  # For notarized distribution, enable hardenedRuntime + entitlements in Apple dev docs.
+
+dmg:
+  artifactName: ${productName}-${version}-${arch}.${ext}
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+publish:
+  provider: github
+  owner: craftbydan
+  repo: Hotate

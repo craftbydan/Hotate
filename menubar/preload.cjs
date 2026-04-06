@@ -7,5 +7,18 @@ contextBridge.exposeInMainWorld('hotate', {
   selectFolder: () => ipcRenderer.invoke('hotate-select-folder'),
   startOllama: () => ipcRenderer.invoke('hotate-start-ollama'),
   quit: () => ipcRenderer.invoke('hotate-quit'),
-  update: () => ipcRenderer.invoke('hotate-update'),
+  reloadWindow: () => ipcRenderer.invoke('hotate-reload-window'),
+  checkForUpdates: () => ipcRenderer.invoke('hotate-check-for-updates'),
+  downloadUpdate: () => ipcRenderer.invoke('hotate-download-update'),
+  quitAndInstall: () => ipcRenderer.invoke('hotate-quit-and-install'),
+  onUpdateEvent: (cb) => {
+    const fn = (_e, p) => cb(p)
+    ipcRenderer.on('hotate-update-event', fn)
+    return () => ipcRenderer.removeListener('hotate-update-event', fn)
+  },
+  onSetup: (cb) => {
+    const fn = (_e, p) => cb(p)
+    ipcRenderer.on('hotate-setup', fn)
+    return () => ipcRenderer.removeListener('hotate-setup', fn)
+  },
 })

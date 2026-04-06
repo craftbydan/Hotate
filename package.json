@@ -1,7 +1,14 @@
 {
   "name": "hotate",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
+  "main": "menubar/main.cjs",
+  "author": "craftbydan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/craftbydan/Hotate.git"
+  },
   "description": "Hotate — friendly web experience + optional local tools (repl, cmd, intent, env)",
   "scripts": {
     "dev": "vite",
@@ -11,6 +18,10 @@
     "preview": "vite preview",
     "menubar": "pkill -f 'menubar/main.cjs' || true; env -u ELECTRON_RUN_AS_NODE electron menubar/main.cjs",
     "menubar:kill": "pkill -f 'menubar/main.cjs' || true",
+    "bundle:ollama": "node scripts/download-ollama-cli.mjs",
+    "menubar:pack": "npm run bundle:ollama && electron-builder --mac --publish never",
+    "menubar:pack:quick": "electron-builder --mac --publish never",
+    "menubar:release": "npm run bundle:ollama && electron-builder --mac --publish always",
     "icons:menubar": "node scripts/render-menubar-icon.mjs",
     "hotate": "node cli/interface-bin.mjs",
     "cmdgen": "node cli/bin.mjs",
@@ -24,10 +35,14 @@
     "hotate-env": "cli/context-bin.mjs",
     "hotate-menubar": "menubar/cli.mjs"
   },
+  "dependencies": {
+    "electron-updater": "^6.6.2",
+    "menubar": "^9.5.2"
+  },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "electron": "^34.5.8",
-    "menubar": "^9.5.2",
+    "electron-builder": "^25.1.8",
     "vite": "^5.4.21"
   }
 }
