@@ -150,6 +150,42 @@ function modelIsPresent(names, want) {
  * Pull default model; stream lines to onLine for UI.
  * @param {import('electron').App} app
  */
+/**
+ * Best-effort parse of `ollama pull` terminal output (percentage in line or JSON status).
+ * @param {string} line
+ * @returns {{ percent?: number, label: string }}
+ */
+function stripAnsi(s) {
+  return String(s || '').replace(/\u001b\[[0-9;]*m/g, '')
+}
+
+function parsePullProgressLine(line) {
+  const label = stripAnsi(String(line || '')).trim()
+  if (!label) return { label: '' }
+  const pctFromText = label.match(/(\d{1,3})\s*%/)
+  if (pctFromText) {
+    const n = Math.min(100, Math.max(0, parseInt(pctFromText[1], 10)))
+    return { percent: n, label }
+  }
+  try {
+    const j = JSON.parse(label)
+    if (j && typeof j === 'object') {
+      if (typeof j.completed === 'number' && typeof j.total === 'number' && j.total > 0) {
+        return {
+          percent: Math.min(100, Math.round((j.completed / j.total) * 100)),
+          label,
+        }
+      }
+      if (typeof j.percent === 'number') {
+        return { percent: Math.min(100, Math.round(j.percent)), label }
+      }
+    }
+  } catch {
+    /* not JSON */
+  }
+  return { label }
+}
+
 function pullModel(app, modelName, onLine) {
   const rt = getRuntime(app)
   if (rt.bundled) mkdirModels(rt.modelsDir)
@@ -171,7 +207,10 @@ function pullModel(app, modelName, onLine) {
     const onData = (buf) => {
       const s = buf.toString()
       for (const line of s.split('\n')) {
-        if (line.trim() && onLine) onLine(line.trim())
+        const trimmed = line.trim()
+        if (!trimmed || !onLine) continue
+        const { percent, label } = parsePullProgressLine(trimmed)
+        onLine({ line: label, percent })
       }
     }
     child.stdout.on('data', onData)
@@ -243,8 +282,13 @@ async function bootstrapOllama(opts) {
   })
 
   try {
-    await pullModel(app, model, (line) => {
-      send('hotate-setup', { phase: 'pull', message: line, model })
+    await pullModel(app, model, (chunk) => {
+      const message = typeof chunk === 'string' ? chunk : chunk.line
+      const percent =
+        typeof chunk === 'object' && chunk && typeof chunk.percent === 'number'
+          ? chunk.percent
+          : undefined
+      send('hotate-setup', { phase: 'pull', message, model, percent })
     })
     names = await listModels(app)
     if (modelIsPresent(names, model)) {

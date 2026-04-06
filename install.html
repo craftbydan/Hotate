@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Install Hotate — 帆立</title>
+<meta name="description" content="Install Hotate on your Mac: open the DMG, drag to Applications, first launch, and the built-in Ollama model setup.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hotate.css">
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand" aria-label="Hotate — home">
+    <span class="nav-jp">帆立</span>
+    <span class="nav-en">hotate</span>
+  </a>
+  <div class="nav-right">
+    <a href="/install.html" class="nav-doc-mobile" aria-label="Install guide">Install</a>
+    <div class="nav-links" aria-label="Page sections">
+      <a href="/install.html" class="nav-link">Install</a>
+      <a href="/functions.html" class="nav-link">Dev Docs</a>
+      <a href="/#how" class="nav-link">How</a>
+      <a href="/#demo" class="nav-link">Stories</a>
+      <a href="/#pricing" class="nav-link">Pricing</a>
+      <a href="/#themes" class="nav-link">Themes</a>
+    </div>
+    <a href="https://github.com/craftbydan/Hotate/releases" class="nav-btn" target="_blank" rel="noopener noreferrer">Download</a>
+  </div>
+</nav>
+
+<section class="install-hero try-sect">
+  <div class="try-max install-max">
+    <p class="s-label install-hero-label">Install — インストール</p>
+    <h1 class="install-hero-title">Welcome to Hotate on your Mac</h1>
+    <p class="install-hero-lead">You only drag once. After that, Hotate sits in your menu bar, picks a folder, and talks to your files in plain language. The first time you open it, it also finishes setting up the small local AI model—progress you can actually see.</p>
+    <div class="install-hero-cta">
+      <a href="https://github.com/craftbydan/Hotate/releases" class="btn-pri" target="_blank" rel="noopener noreferrer">Get the latest DMG</a>
+      <a href="/" class="btn-sec">Back to home</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="install-section">
+  <div class="try-max install-max">
+    <h2 class="install-h2">1 · Open the disk image</h2>
+    <p class="install-p">Download <strong>Hotate</strong> from GitHub Releases and double-click the <code>.dmg</code>. A window opens with the app and a shortcut to Applications—that’s normal macOS behavior.</p>
+
+    <div class="install-dmg-stage" aria-hidden="true">
+      <div class="install-dmg-window">
+        <div class="install-dmg-titlebar">
+          <span class="install-dmg-dot"></span><span class="install-dmg-dot"></span><span class="install-dmg-dot"></span>
+          <span class="install-dmg-title">Hotate</span>
+        </div>
+        <div class="install-dmg-body">
+          <div class="install-dmg-app">
+            <div class="install-dmg-app-icon"></div>
+            <span class="install-dmg-app-name">Hotate</span>
+          </div>
+          <div class="install-dmg-arrow" title="Drag">
+            <svg width="48" height="24" viewBox="0 0 48 24" fill="none" aria-hidden="true"><path d="M4 12h36M34 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="install-dmg-apps-folder">
+            <div class="install-dmg-folder-icon"></div>
+            <span class="install-dmg-folder-label">Applications</span>
+          </div>
+        </div>
+      </div>
+      <p class="install-dmg-caption">Drag the Hotate icon onto the Applications folder, then eject the disk image.</p>
+    </div>
+  </div>
+</section>
+
+<section class="install-section install-section-alt">
+  <div class="try-max install-max">
+    <h2 class="install-h2">2 · Launch from Applications</h2>
+    <p class="install-p">Open <strong>Applications</strong> and double-click <strong>Hotate</strong>. The first time, macOS might say the app can’t be checked for malware—that happens with unsigned builds. Choose <strong>Open</strong> from the right-click menu, or allow it under <strong>System Settings → Privacy &amp; Security</strong>.</p>
+    <div class="install-tip">
+      <strong>Tip</strong> — Hotate is a menu bar app: you won’t see a dock icon on macOS. Look for the shell icon near the clock, or use Spotlight to open it again if the window closed.
+    </div>
+  </div>
+</section>
+
+<section class="install-section">
+  <div class="try-max install-max">
+    <h2 class="install-h2">3 · First launch — Ollama &amp; model</h2>
+    <p class="install-p">The Mac build includes the <strong>Ollama</strong> engine bundled with Hotate (no separate installer). On first run, Hotate starts that engine and downloads the default small model once—about a few hundred MB, depending on the release. You’ll see a <strong>progress bar</strong> and status lines while it downloads; stay online for this step.</p>
+
+    <div class="install-progress-demo" aria-hidden="true">
+      <p class="install-progress-demo-label">What you’ll see in the app</p>
+      <div class="install-progress-demo-track">
+        <div class="install-progress-demo-fill" style="width: 67%"></div>
+      </div>
+      <p class="install-progress-demo-caption">Example: pulling model layers — percentage updates as Ollama streams the download.</p>
+    </div>
+
+    <p class="install-p install-muted">If you already use the full Ollama app separately, Hotate’s packaged build uses its own isolated port and model folder so the two don’t fight each other.</p>
+  </div>
+</section>
+
+<section class="install-section install-section-alt">
+  <div class="try-max install-max">
+    <h2 class="install-h2">4 · How to use Hotate</h2>
+    <ol class="install-use-list">
+      <li><strong>Click the menu bar icon</strong> to open the panel.</li>
+      <li><strong>Choose your folder</strong> in Settings (gear) → <em>Change</em> next to project path—that’s where read/list/plan commands apply.</li>
+      <li><strong>Type what you want</strong> in normal language, e.g. “What’s in this folder?” or “Move these photos into Travel.”</li>
+      <li><strong>Review before anything risky</strong> — Hotate shows proposed shell steps for changes; read-only answers appear as chat.</li>
+    </ol>
+    <div class="install-cta-row">
+      <a href="/functions.html" class="btn-sec">Developer &amp; tools overview</a>
+      <a href="/#download" class="btn-pri">More on the main site</a>
+    </div>
+  </div>
+</section>
+
+<footer class="install-footer">
+  <div class="try-max install-max">
+    <p class="install-footer-note">Questions? See <a href="/functions.html">Dev docs</a> or <a href="https://github.com/craftbydan/Hotate" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

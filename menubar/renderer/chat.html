@@ -9,6 +9,56 @@
 </head>
 <body class="app-body menubar-body">
 
+<div id="menubar-onboarding-root" class="menubar-onboarding-root" hidden>
+  <div class="menubar-ob-top">
+    <span class="menubar-ob-brand">Hotate</span>
+    <button type="button" class="menubar-ob-skip" id="menubar-ob-skip">Skip intro</button>
+  </div>
+  <div class="menubar-ob-scroll">
+    <div class="menubar-ob-step is-active" data-ob-step="0">
+      <p class="menubar-ob-kicker">Step 1 of 4</p>
+      <h2 class="menubar-ob-h2">Welcome</h2>
+      <p class="menubar-ob-p">Hotate lives in your menu bar and turns everyday language into file-aware answers and careful shell steps—nothing runs until you’re comfortable with it.</p>
+    </div>
+    <div class="menubar-ob-step" data-ob-step="1">
+      <p class="menubar-ob-kicker">Step 2 of 4</p>
+      <h2 class="menubar-ob-h2">Install reminder</h2>
+      <p class="menubar-ob-p">If you opened this from a <strong>DMG</strong>, drag Hotate into <strong>Applications</strong> first, then launch from there. Eject the disk image when you’re done.</p>
+      <p class="menubar-ob-p menubar-ob-muted">First open? macOS may warn about an unidentified developer—use <strong>Right-click → Open</strong> once, or allow it under Privacy &amp; Security.</p>
+    </div>
+    <div class="menubar-ob-step" data-ob-step="2">
+      <p class="menubar-ob-kicker">Step 3 of 4</p>
+      <h2 class="menubar-ob-h2">How to use it</h2>
+      <ul class="menubar-ob-ul">
+        <li>Click the <strong>shell icon</strong> in the menu bar to open this window.</li>
+        <li>Use <strong>Settings</strong> to pick the <strong>project folder</strong> Hotate should reason about.</li>
+        <li>Type full sentences: “What’s in this folder?” or “Move these into Travel.”</li>
+        <li>Read-only replies appear as chat; <strong>risky</strong> actions show a command to review first.</li>
+      </ul>
+    </div>
+    <div class="menubar-ob-step" data-ob-step="3">
+      <p class="menubar-ob-kicker">Step 4 of 4</p>
+      <h2 class="menubar-ob-h2">Preparing the AI</h2>
+      <p class="menubar-ob-p" id="menubar-ob-setup-desc">Connecting to the local engine…</p>
+      <div class="menubar-ob-progress-wrap" id="menubar-ob-progress-wrap">
+        <div class="menubar-ob-progress-track" id="menubar-ob-progress-track">
+          <div class="menubar-ob-progress-fill" id="menubar-ob-progress-fill"></div>
+        </div>
+        <p class="menubar-ob-progress-meta" id="menubar-ob-progress-meta"></p>
+      </div>
+      <div class="menubar-ob-step-actions">
+        <button type="button" class="menubar-ob-secondary" id="menubar-ob-bg">Continue in background</button>
+        <button type="button" class="menubar-ob-primary" id="menubar-ob-done" hidden>Start chatting</button>
+      </div>
+    </div>
+  </div>
+  <div class="menubar-ob-footer">
+    <button type="button" class="menubar-ob-back" id="menubar-ob-back">Back</button>
+    <div class="menubar-ob-dots" id="menubar-ob-dots" aria-hidden="true"></div>
+    <button type="button" class="menubar-ob-next" id="menubar-ob-next">Next</button>
+  </div>
+</div>
+
 <header class="menubar-header menubar-drag-region" title="Drag to move the window">
   <div class="menubar-brand">
     <span class="menubar-drag-grip" aria-hidden="true"></span>
@@ -297,7 +347,8 @@
     }
   };
 
-  /* First-run: bundled Ollama + model pull */
+  /* First-run: bundled Ollama + model pull + onboarding wizard */
+  const ONBOARDING_KEY = 'hotate-onboarding-v1';
   const setupBanner = document.getElementById('menubar-setup-banner');
   const setupTitle = document.getElementById('menubar-setup-title');
   const setupMsg = document.getElementById('menubar-setup-msg');
@@ -305,30 +356,184 @@
   const setupProgBar = document.getElementById('menubar-setup-progress-bar');
   const ollamaEndpointHint = document.getElementById('ollama-endpoint-hint');
 
-  if (window.hotate && window.hotate.onSetup) {
-    window.hotate.onSetup((p) => {
-      if (!setupBanner || !setupTitle || !setupMsg) return;
-      const phase = p && p.phase;
-      if (phase === 'done' || phase === 'error') {
-        setupBanner.hidden = phase === 'done';
-        if (phase === 'error') {
-          setupTitle.textContent = 'Setup needs attention';
-          setupMsg.textContent = p.message || '';
-          setupProg.hidden = true;
-        }
-        return;
-      }
-      setupBanner.hidden = false;
-      if (phase === 'pull' && p.message && /pulling|%\s|MiB|GB/i.test(p.message)) {
-        setupTitle.textContent = 'Downloading model';
-        setupMsg.textContent = p.message;
-        setupProg.hidden = false;
-      } else {
-        setupTitle.textContent = 'Setting up Hotate';
-        setupMsg.textContent = p.message || '';
-        setupProg.hidden = phase !== 'pull';
-      }
+  const obRoot = document.getElementById('menubar-onboarding-root');
+  const obSkip = document.getElementById('menubar-ob-skip');
+  const obBack = document.getElementById('menubar-ob-back');
+  const obNext = document.getElementById('menubar-ob-next');
+  const obDots = document.getElementById('menubar-ob-dots');
+  const obSteps = document.querySelectorAll('.menubar-ob-step');
+  const obSetupDesc = document.getElementById('menubar-ob-setup-desc');
+  const obProgFill = document.getElementById('menubar-ob-progress-fill');
+  const obProgTrack = document.getElementById('menubar-ob-progress-track');
+  const obProgMeta = document.getElementById('menubar-ob-progress-meta');
+  const obDone = document.getElementById('menubar-ob-done');
+  const obBg = document.getElementById('menubar-ob-bg');
+
+  let obIndex = 0;
+  const obTotal = obSteps.length;
+  let lastSetupPayload = null;
+
+  function obDismissComplete() {
+    try { localStorage.setItem(ONBOARDING_KEY, '1'); } catch (e) { /* ignore */ }
+    if (obRoot) obRoot.hidden = true;
+  }
+
+  function obShowStep(i) {
+    obIndex = Math.max(0, Math.min(obTotal - 1, i));
+    obSteps.forEach((el) => {
+      el.classList.toggle('is-active', Number(el.getAttribute('data-ob-step')) === obIndex);
     });
+    if (obDots) {
+      obDots.querySelectorAll('.menubar-ob-dot').forEach((d, j) => {
+        d.classList.toggle('is-active', j === obIndex);
+      });
+    }
+    if (obBack) obBack.style.visibility = obIndex === 0 ? 'hidden' : 'visible';
+    if (obNext) {
+      if (obIndex === obTotal - 1) {
+        obNext.style.display = 'none';
+      } else {
+        obNext.style.display = 'inline-flex';
+        obNext.textContent = 'Next';
+      }
+    }
+    if (obBg) obBg.style.display = obIndex === obTotal - 1 ? 'inline-flex' : 'none';
+  }
+
+  function setProgressBarDeterminate(el, pct) {
+    if (!el) return;
+    el.classList.remove('is-indeterminate');
+    const n = Math.max(0, Math.min(100, Math.round(pct)));
+    el.style.width = n + '%';
+  }
+
+  function setProgressBarIndeterminate(el) {
+    if (!el) return;
+    el.classList.add('is-indeterminate');
+    el.style.width = '';
+  }
+
+  function applySetupPayload(p) {
+    if (p && p.phase) lastSetupPayload = p;
+    const cur = lastSetupPayload;
+    if (!cur) return;
+    const phase = cur.phase;
+    const msg = cur.message || '';
+    const pct = typeof cur.percent === 'number' ? cur.percent : undefined;
+
+    const onboardingOpen = obRoot && !obRoot.hidden;
+
+    if (onboardingOpen && obSetupDesc) {
+      if (phase === 'error') {
+        obSetupDesc.textContent = msg || 'Something went wrong.';
+        setProgressBarIndeterminate(obProgFill);
+        if (obProgMeta) obProgMeta.textContent = 'You can still open chat below or retry from Settings.';
+        if (obDone) obDone.hidden = false;
+        obDone.textContent = 'Open chat';
+      } else if (phase === 'done') {
+        obSetupDesc.textContent = 'All set. The local model is ready.';
+        setProgressBarDeterminate(obProgFill, 100);
+        if (obProgMeta) obProgMeta.textContent = '';
+        if (obDone) {
+          obDone.hidden = false;
+          obDone.textContent = 'Start chatting';
+        }
+      } else if (phase === 'pull') {
+        obSetupDesc.textContent = msg || 'Downloading model…';
+        if (typeof pct === 'number') {
+          setProgressBarDeterminate(obProgFill, pct);
+          if (obProgMeta) obProgMeta.textContent = pct + '%';
+        } else {
+          setProgressBarIndeterminate(obProgFill);
+          if (obProgMeta) obProgMeta.textContent = '';
+        }
+        if (obDone) obDone.hidden = true;
+      } else {
+        obSetupDesc.textContent = msg || 'Working…';
+        setProgressBarIndeterminate(obProgFill);
+        if (obProgMeta) obProgMeta.textContent = '';
+        if (obDone) obDone.hidden = true;
+      }
+    }
+
+    if (!setupBanner || !setupTitle || !setupMsg) return;
+    if (onboardingOpen) {
+      setupBanner.hidden = true;
+      return;
+    }
+
+    if (phase === 'done') {
+      setupBanner.hidden = true;
+      return;
+    }
+    if (phase === 'error') {
+      setupBanner.hidden = false;
+      setupTitle.textContent = 'Setup needs attention';
+      setupMsg.textContent = msg;
+      setupProg.hidden = true;
+      setProgressBarIndeterminate(setupProgBar);
+      return;
+    }
+    setupBanner.hidden = false;
+    if (phase === 'pull') {
+      setupTitle.textContent = 'Downloading model';
+      setupMsg.textContent = msg;
+      setupProg.hidden = false;
+      if (typeof pct === 'number') {
+        setProgressBarDeterminate(setupProgBar, pct);
+      } else {
+        setProgressBarIndeterminate(setupProgBar);
+      }
+    } else {
+      setupTitle.textContent = 'Setting up Hotate';
+      setupMsg.textContent = msg;
+      setupProg.hidden = phase !== 'pull';
+      setProgressBarIndeterminate(setupProgBar);
+    }
+  }
+
+  if (obDots && obTotal) {
+    obDots.innerHTML = '';
+    for (let j = 0; j < obTotal; j++) {
+      const dot = document.createElement('span');
+      dot.className = 'menubar-ob-dot' + (j === 0 ? ' is-active' : '');
+      obDots.appendChild(dot);
+    }
+  }
+
+  try {
+    if (!localStorage.getItem(ONBOARDING_KEY) && obRoot) {
+      obRoot.hidden = false;
+      obShowStep(0);
+      if (setupBanner) setupBanner.hidden = true;
+    }
+  } catch (e) {
+    if (obRoot) obRoot.hidden = true;
+  }
+
+  function obFinishOrSkip() {
+    obDismissComplete();
+    obShowStep(0);
+    applySetupPayload(null);
+  }
+
+  if (obSkip) obSkip.onclick = () => obFinishOrSkip();
+  if (obBg) obBg.onclick = () => obFinishOrSkip();
+  if (obDone) {
+    obDone.onclick = () => {
+      obDismissComplete();
+      if (setupBanner) setupBanner.hidden = true;
+    };
+  }
+  if (obBack) {
+    obBack.onclick = () => obShowStep(obIndex - 1);
+  }
+  if (obNext) {
+    obNext.onclick = () => obShowStep(obIndex + 1);
+  }
+
+  if (window.hotate && window.hotate.onSetup) {
+    window.hotate.onSetup((p) => applySetupPayload(p));
   }
 
   const checkUpdatesBtn = document.getElementById('check-updates-btn');

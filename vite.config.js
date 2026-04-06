@@ -100,6 +100,7 @@ export default defineConfig({
         main: path.resolve(__dirname, 'index.html'),
         app: path.resolve(__dirname, 'app.html'),
         functions: path.resolve(__dirname, 'functions.html'),
+        install: path.resolve(__dirname, 'install.html'),
       },
     },
   },

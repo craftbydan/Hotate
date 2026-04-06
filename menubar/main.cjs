@@ -191,7 +191,7 @@ const indexHtml = pathToFileURL(path.join(__dirname, 'renderer', 'chat.html')).h
 
 const browserWindow = {
   width: 340,
-  height: 520,
+  height: 580,
   resizable: true,
   webPreferences: {
     preload: path.join(__dirname, 'preload.cjs'),

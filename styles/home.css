@@ -464,3 +464,280 @@ footer { padding:40px 24px 52px; background:var(--paper); border-top:1px solid v
 .footer-links { display:flex; justify-content:center; gap:24px; margin-bottom:16px; }
 .footer-link { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink); text-decoration:none; opacity:0.28; }
 .footer-note { font-family:'DM Mono',monospace; font-size:9px; color:var(--ink); opacity:0.2; text-align:center; letter-spacing:0.1em; }
+
+/* ——— Install guide (install.html) ——— */
+.install-max { max-width: 720px; }
+.install-hero {
+  padding: 56px 24px 48px;
+  background: var(--paper);
+  min-height: auto;
+}
+.install-hero-label { opacity: 0.85; margin-bottom: 12px; }
+.install-hero-title {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 300;
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+.install-hero-lead {
+  font-size: 15px;
+  line-height: 1.85;
+  color: rgba(24, 20, 15, 0.62);
+  margin: 0 0 28px;
+  max-width: 52ch;
+}
+.install-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.install-hero-cta .btn-sec { margin: 0; }
+
+.install-section {
+  padding: 48px 24px;
+  background: var(--paper);
+}
+.install-section-alt {
+  background: linear-gradient(180deg, rgba(250, 247, 241, 0.9), var(--paper));
+}
+.install-h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 300;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+.install-p {
+  font-size: 14px;
+  line-height: 1.85;
+  color: rgba(24, 20, 15, 0.72);
+  margin: 0 0 20px;
+  max-width: 58ch;
+}
+.install-p code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: rgba(24, 20, 15, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.install-muted { opacity: 0.85; font-size: 13px; }
+
+.install-dmg-stage {
+  margin-top: 28px;
+  padding: 28px 20px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, #faf7f1 0%, #f0ebe3 100%);
+  box-shadow: 0 20px 48px rgba(24, 20, 15, 0.06);
+}
+.install-dmg-window {
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(24, 20, 15, 0.1);
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(24, 20, 15, 0.08);
+}
+.install-dmg-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(250, 247, 241, 0.95);
+  border-bottom: 1px solid rgba(24, 20, 15, 0.06);
+}
+.install-dmg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(24, 20, 15, 0.12);
+}
+.install-dmg-title {
+  flex: 1;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(24, 20, 15, 0.45);
+  margin-right: 40px;
+}
+.install-dmg-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 3vw, 20px);
+  padding: 32px 16px 36px;
+  flex-wrap: wrap;
+}
+.install-dmg-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 88px;
+}
+.install-dmg-app-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #ede8dc, #d5cfc0);
+  border: 1px solid rgba(124, 59, 30, 0.2);
+  box-shadow: 0 6px 16px rgba(124, 59, 30, 0.12);
+}
+.install-dmg-app-name {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.install-dmg-arrow {
+  color: var(--rust);
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+.install-dmg-apps-folder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 88px;
+}
+.install-dmg-folder-icon {
+  width: 64px;
+  height: 52px;
+  border-radius: 6px 6px 4px 4px;
+  background: linear-gradient(180deg, #6eb5ff 0%, #4a9fff 40%, #3a8eef 100%);
+  border: 1px solid rgba(0, 60, 140, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  position: relative;
+}
+.install-dmg-folder-icon::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 6px;
+  width: 28px;
+  height: 10px;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, #8cc8ff, #6eb5ff);
+}
+.install-dmg-folder-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(24, 20, 15, 0.5);
+}
+.install-dmg-caption {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(24, 20, 15, 0.55);
+  margin: 20px 0 0;
+  line-height: 1.6;
+  max-width: 36ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.install-tip {
+  margin-top: 8px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border-left: 3px solid var(--rust);
+  background: rgba(124, 59, 30, 0.06);
+  font-size: 13px;
+  line-height: 1.75;
+  color: rgba(24, 20, 15, 0.78);
+  max-width: 58ch;
+}
+.install-tip strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.install-progress-demo {
+  margin: 24px 0;
+  padding: 20px 22px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.install-progress-demo-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(24, 20, 15, 0.4);
+  margin: 0 0 12px;
+}
+.install-progress-demo-track {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(24, 20, 15, 0.08);
+  overflow: hidden;
+}
+.install-progress-demo-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--rust), #a34a28);
+  transition: width 0.4s ease;
+}
+.install-progress-demo-caption {
+  font-size: 12px;
+  color: rgba(24, 20, 15, 0.5);
+  margin: 12px 0 0;
+  line-height: 1.5;
+}
+
+.install-use-list {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(24, 20, 15, 0.75);
+  max-width: 56ch;
+}
+.install-use-list li { margin-bottom: 10px; }
+.install-use-list strong { color: var(--ink); font-weight: 600; }
+
+.install-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.install-cta-row .btn-pri,
+.install-cta-row .btn-sec { margin: 0; }
+
+.install-footer {
+  padding: 32px 24px 48px;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+.install-footer-note {
+  font-size: 13px;
+  color: rgba(24, 20, 15, 0.5);
+  margin: 0;
+  text-align: center;
+}
+.install-footer-note a {
+  color: var(--rust);
+  text-decoration: none;
+  font-weight: 500;
+}
+.install-footer-note a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 720px) {
+  .install-dmg-body {
+    flex-wrap: nowrap;
+  }
+}
