@@ -227,7 +227,55 @@
   color: var(--rust);
 }
 
-/* HERO BUTTONS */
+.functions-table-wrap {
+  margin-top: 32px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(24, 20, 15, 0.02);
+}
+
+.functions-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.functions-table th {
+  padding: 16px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(24, 20, 15, 0.4);
+  border-bottom: 1px solid var(--line);
+  background: rgba(250, 247, 241, 0.4);
+  font-weight: 400;
+}
+
+.functions-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(24, 20, 15, 0.7);
+  vertical-align: top;
+}
+
+.functions-table tr:last-child td {
+  border-bottom: none;
+}
+
+.functions-table code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--ink);
+  background: rgba(24, 20, 15, 0.04);
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
 .hero-btns { display:flex; flex-direction:column; gap:10px; opacity:0; animation: fadeUp 0.8s ease 0.7s forwards; }
 .btn-pri { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 15px 20px; text-align: center; text-decoration: none; display: block; border-radius: 2px; }
 .btn-sec { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; text-align: center; display: block; padding: 13px; border: 1px solid var(--line); border-radius: 2px; opacity: 0.5; }
