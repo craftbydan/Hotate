@@ -33,18 +33,19 @@
 <body>
 
 <nav>
-  <a href="#" class="nav-brand" aria-label="Hotate — home">
+  <a href="/" class="nav-brand" aria-label="Hotate — home">
     <span class="nav-jp">帆立</span>
     <span class="nav-en">hotate</span>
   </a>
   <div class="nav-right">
     <div class="nav-links" aria-label="Page sections">
+      <a href="/app.html" class="nav-link">Chat</a>
       <a href="#how" class="nav-link">How</a>
-      <a href="#demo" class="nav-link">Examples</a>
+      <a href="#demo" class="nav-link">Stories</a>
       <a href="#pricing" class="nav-link">Pricing</a>
       <a href="#themes" class="nav-link">Themes</a>
     </div>
-    <a href="#download" class="nav-btn">Free download</a>
+    <a href="/app.html" class="nav-btn">Open chat</a>
   </div>
 </nav>
 
@@ -56,21 +57,56 @@
     <h1 class="hero-title">Tell your computer<br>what you want.<br><em>It just does it.</em></h1>
     <p class="hero-sub">No commands to memorize.<br>No strange symbols to type.<br><span>Free for everyone, forever.</span></p>
   </div>
-  <div class="demo">
-    <div class="demo-dots">● ● ●</div>
-    <div class="dl"><span class="dp">~</span>move my Fukuoka trip photos into the Travel folder</div>
-    <div class="dl"><span class="dk">✓ 347 photos moved to 旅行 / Fukuoka Trip</span></div>
-    <div class="dl" style="margin-top:10px"><span class="dp">~</span>delete my old Beppu photos</div>
-    <div class="dl">
-      <span class="dw">⚠ This will remove 89 photos (4.2 GB)</span>
-      <span class="dw">  Beppu — March 12–15, 2025</span>
-      <span class="do">[ cancel ]  [ show me first ]  [ delete ]</span>
+  <div class="hero-chat" aria-label="Example conversation">
+    <div class="hero-chat-top">
+      <span class="hero-chat-label">Example</span>
+      <span class="hero-chat-note">Same words you’d use in a message</span>
     </div>
-    <div class="dl" style="margin-top:10px"><span class="dp">~</span><span class="db"></span></div>
+    <div class="hero-chat-thread">
+      <div class="chat-row chat-row-user">
+        <div class="chat-bubble chat-bubble-user">Move my Fukuoka trip photos into the Travel folder</div>
+      </div>
+      <div class="chat-row chat-row-bot">
+        <div class="chat-bubble chat-bubble-bot">
+          <strong class="chat-bot-title">Here’s the plan</strong>
+          <p class="chat-bot-body">I’ll gather your March photos from Downloads, show you a quick list, then move them into <em>Travel / Fukuoka Trip</em> when you confirm.</p>
+          <p class="chat-ok">347 photos · ready when you are</p>
+        </div>
+      </div>
+      <div class="chat-row chat-row-user">
+        <div class="chat-bubble chat-bubble-user">Delete my old Beppu photos</div>
+      </div>
+      <div class="chat-row chat-row-bot">
+        <div class="chat-bubble chat-bubble-bot chat-bubble-careful">
+          <strong class="chat-bot-title">Before anything is removed</strong>
+          <p class="chat-bot-body">This would remove <strong>89 photos</strong> (about 4.2 GB) from Beppu · March 12–15, 2025. This can’t be undone after you confirm.</p>
+          <div class="chat-actions" role="group" aria-label="Choices">
+            <span class="chat-pill">Cancel</span>
+            <span class="chat-pill chat-pill-secondary">Show me first</span>
+            <span class="chat-pill chat-pill-primary">Go ahead</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="hero-btns">
-    <a href="#download" class="btn-pri">Download Hotate — it's free</a>
-    <a href="#how" class="btn-sec">See how it works ↓</a>
+    <a href="/app.html" class="btn-pri">Open the chat</a>
+    <a href="#download" class="btn-sec">Download for your computer</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CHAT CTA — real chat lives on app.html -->
+<section class="try-sect" id="try" aria-labelledby="try-heading">
+  <div class="try-max">
+    <div class="s-label">Chat — チャット</div>
+    <h2 class="try-heading r" id="try-heading">One place to say what you need</h2>
+    <p class="try-lead r">Hotate’s chat is separate from this page: full sentences in, clear suggested steps out. No command line, no terminal window — just conversation.</p>
+    <div class="try-cta-row r">
+      <a href="/app.html" class="btn-pri try-cta-btn">Open Hotate chat</a>
+      <p class="try-cta-note">With <em>npm run dev</em>, the chat can call the same planner on your computer. <a href="#download">Install</a> when you’re ready for more.</p>
+    </div>
   </div>
 </section>
 
@@ -96,161 +132,163 @@
 
 <div class="divider"></div>
 
-<!-- BEFORE / AFTER -->
+<!-- STORIES — plain language only, no terminal -->
 <section class="ba-section" id="demo">
-  <div class="s-label">Before & After — 前後</div>
-  <h2 class="ba-intro r">What changes when<br>you use <em>Hotate.</em></h2>
-  <p class="ba-sub r">Same computer. Same power.<br>No more secret language.</p>
+  <div class="s-label">Stories — 例</div>
+  <h2 class="ba-intro r">What changes with <em>Hotate</em></h2>
+  <p class="ba-sub r">Same computer. Same power.<br>Explained the way people actually talk.</p>
 
   <!-- 01 -->
   <p class="sc-lbl">01 / 05</p>
   <h3 class="sc-title">Sort your travel photos</h3>
   <p class="sc-desc">You just got back from Japan and want to move 347 photos into the right folders.</p>
   <div class="pair r">
-    <div class="cb">
-      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">You need the exact command. One wrong folder name and photos go missing.</span></div>
-      <div class="cb-body">
-        <span class="rp">$ </span><span class="rc">mv ~/Downloads/DCIM/*.jpg ~/Pictures/Japan\ Trip/</span>
-        <span class="re">mv: No such file or directory: Japan Trip</span>
-        <span class="rk">← Spaces in folder names break the command silently.</span>
+    <div class="story-before">
+      <div class="story-before-head"><span class="story-badge">Without Hotate</span></div>
+      <div class="story-before-body">
+        <p>You juggle hidden paths, risky bulk moves, and folder names that contain spaces. One slip and files land in the wrong place — with no friendly preview along the way.</p>
       </div>
     </div>
-    <div class="ca">
-      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Just say where you want them.</span></div>
-      <div class="ca-body">
-        <span class="hp">~</span><span class="hc">move my Japan trip photos to the travel folder</span>
-        <span class="ho">Found 347 photos from March 2025 in Downloads...</span>
-        <span class="hk">✓ 347 photos moved to 旅行 / Japan Trip</span>
-      </div>
-    </div>
-  </div>
-  <div class="insight r"><p>Before, a space in a folder name was enough to break everything. <em>Hotate handles those details so you don't have to.</em></p></div>
-
-  <!-- 02 -->
-  <p class="sc-lbl">02 / 05</p>
-  <h3 class="sc-title">Delete photos you don't need</h3>
-  <p class="sc-desc">You want to free up space by removing blurry shots from your Beppu onsen trip.</p>
-  <div class="pair r">
-    <div class="cb">
-      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">One wrong flag and it deletes instantly. No warning, no undo.</span></div>
-      <div class="cb-body">
-        <span class="rp">$ </span><span class="rc">find ~/Pictures/Beppu -name "*.jpg" -mtime </span><span class="rf">+30</span><span class="rc"> -delete</span>
-        <span class="rk">← What does -mtime +30 mean exactly?</span>
-        <span class="rk">← Already deleted. No confirmation. No undo.</span>
-      </div>
-    </div>
-    <div class="ca">
-      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Shows you exactly what will be deleted. You choose.</span></div>
-      <div class="ca-body"><span class="hp">~</span><span class="hc">delete my old Beppu photos</span></div>
-      <div class="preview">
-        <div class="preview-title">This will remove 89 photos (4.2 GB)</div>
-        <div class="preview-body">From your Beppu folder · March 12–15, 2025<br>This cannot be undone</div>
-        <div class="preview-acts">
-          <button class="act">Cancel</button>
-          <button class="act act-ok">Show me first</button>
-          <button class="act act-del">Delete</button>
+    <div class="story-after">
+      <div class="story-after-head"><span class="story-badge story-badge-hotate">With Hotate</span></div>
+      <div class="story-after-thread">
+        <div class="chat-row chat-row-user">
+          <div class="chat-bubble chat-bubble-user">Move my Japan trip photos to the travel folder</div>
+        </div>
+        <div class="chat-row chat-row-bot">
+          <div class="chat-bubble chat-bubble-bot">
+            <strong class="chat-bot-title">Here’s what I found</strong>
+            <p class="chat-bot-body">347 photos from March 2025 in Downloads. I can move them to <em>Travel / Japan Trip</em> after you confirm.</p>
+            <p class="chat-ok">Ready when you are</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="insight r"><p>Before, files were gone the moment you pressed enter. <em>Hotate always shows you what will be deleted — and waits for you to say yes.</em></p></div>
+  <div class="insight r"><p>Folder quirks used to be your problem. <em>Hotate handles the details in the background.</em></p></div>
+
+  <!-- 02 -->
+  <p class="sc-lbl">02 / 05</p>
+  <h3 class="sc-title">Delete photos you don’t need</h3>
+  <p class="sc-desc">You want to free up space by removing older shots from your Beppu onsen trip.</p>
+  <div class="pair r">
+    <div class="story-before">
+      <div class="story-before-head"><span class="story-badge">Without Hotate</span></div>
+      <div class="story-before-body">
+        <p>Power shortcuts often delete the moment you confirm. Cryptic options and no plain-language summary — so it’s easy to remove more than you meant.</p>
+      </div>
+    </div>
+    <div class="story-after">
+      <div class="story-after-head"><span class="story-badge story-badge-hotate">With Hotate</span></div>
+      <div class="story-after-thread">
+        <div class="chat-row chat-row-user">
+          <div class="chat-bubble chat-bubble-user">Delete my old Beppu photos</div>
+        </div>
+        <div class="chat-row chat-row-bot">
+          <div class="chat-bubble chat-bubble-bot chat-bubble-careful">
+            <strong class="chat-bot-title">Before anything is removed</strong>
+            <p class="chat-bot-body"><strong>89 photos</strong> (about 4.2 GB) from Beppu · March 12–15, 2025. This can’t be undone after you say go.</p>
+            <div class="chat-actions" role="group" aria-label="Choices">
+              <span class="chat-pill">Cancel</span>
+              <span class="chat-pill chat-pill-secondary">Show me first</span>
+              <span class="chat-pill chat-pill-primary">Go ahead</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="insight r"><p>Risky actions deserve a real pause. <em>Hotate spells out what will change, then you choose.</em></p></div>
 
   <!-- 03 -->
   <p class="sc-lbl">03 / 05</p>
   <h3 class="sc-title">Open your food blog on your computer</h3>
   <p class="sc-desc">You built a ramen review site and want to see how it looks before sharing it.</p>
   <div class="pair r">
-    <div class="cb">
-      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">You need to know what kind of project it is, then remember the right command.</span></div>
-      <div class="cb-body">
-        <span class="rp">$ </span><span class="rc">cd ramen-blog && npm run dev</span>
-        <span class="re">Error: Cannot find module 'vite'</span>
-        <span class="rp">$ </span><span class="rc">npm install</span>
-        <span class="ro">added 312 packages...</span>
-        <span class="rp">$ </span><span class="rc">npm run dev</span>
-        <span class="ro">Local: http://localhost:5173/</span>
-        <span class="rk">← Three tries just to open a file.</span>
+    <div class="story-before">
+      <div class="story-before-head"><span class="story-badge">Without Hotate</span></div>
+      <div class="story-before-body">
+        <p>You chase errors, installers, and jargon just to preview a project. Several disconnected steps — and none of it looks like a conversation.</p>
       </div>
     </div>
-    <div class="ca">
-      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Figures out what your project needs and opens it for you.</span></div>
-      <div class="ca-body">
-        <span class="hp">~</span><span class="hc">open my ramen blog on my computer</span>
-        <span class="ho">Found: ramen-blog — installing 2 missing things...</span>
-        <span class="hk">✓ Your blog is running — tap to open</span>
-        <span class="ho">localhost:5173</span>
+    <div class="story-after">
+      <div class="story-after-head"><span class="story-badge story-badge-hotate">With Hotate</span></div>
+      <div class="story-after-thread">
+        <div class="chat-row chat-row-user">
+          <div class="chat-bubble chat-bubble-user">Open my ramen blog on my computer</div>
+        </div>
+        <div class="chat-row chat-row-bot">
+          <div class="chat-bubble chat-bubble-bot">
+            <strong class="chat-bot-title">Getting things ready</strong>
+            <p class="chat-bot-body">Found your ramen-blog project. I’ll sort missing pieces quietly, then open a preview link when it’s safe.</p>
+            <p class="chat-ok">Preview ready · tap to open in your browser</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="insight r"><p>Before, you'd need to know the difference between npm, yarn, and python just to open a file. <em>Hotate figures that out quietly.</em></p></div>
+  <div class="insight r"><p>You shouldn’t need an engineering degree to preview your own work. <em>Hotate connects the dots.</em></p></div>
 
   <!-- 04 -->
   <p class="sc-lbl">04 / 05</p>
   <h3 class="sc-title">Rename 200 photos at once</h3>
-  <p class="sc-desc">You have Fukuoka and Kyoto photos mixed together, all named IMG_0001 to IMG_0200. You want them sorted by city.</p>
+  <p class="sc-desc">Fukuoka and Kyoto photos are mixed together, all named IMG_0001 to IMG_0200. You want them sorted by city.</p>
   <div class="pair r">
-    <div class="cb">
-      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">Requires writing a script. Most people just do it by hand for hours.</span></div>
-      <div class="cb-body">
-        <span class="rp">$ </span><span class="rc">for f in Fukuoka/*.jpg; do mv "$f" "Fukuoka_$f"; done</span>
-        <span class="rk">← No preview of the new names before it runs.</span>
-        <span class="rk">← One mistake and all 200 files are named wrong.</span>
+    <div class="story-before">
+      <div class="story-before-head"><span class="story-badge">Without Hotate</span></div>
+      <div class="story-before-body">
+        <p>Bulk renames often mean formulas or hours of clicking. One mistake can misname hundreds of files — with no rehearsal before it happens.</p>
       </div>
     </div>
-    <div class="ca">
-      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Shows the new names before changing anything.</span></div>
-      <div class="ca-body"><span class="hp">~</span><span class="hc">rename my trip photos by city name</span></div>
-      <div class="preview">
-        <div class="preview-title">Here's what the new names will look like</div>
-        <div class="preview-body">
-          IMG_0001.jpg → Fukuoka_IMG_0001.jpg<br>
-          IMG_0002.jpg → Fukuoka_IMG_0002.jpg<br>
-          IMG_0089.jpg → Kyoto_IMG_0089.jpg<br>
-          <span style="opacity:0.4">...and 197 more</span>
+    <div class="story-after">
+      <div class="story-after-head"><span class="story-badge story-badge-hotate">With Hotate</span></div>
+      <div class="story-after-thread">
+        <div class="chat-row chat-row-user">
+          <div class="chat-bubble chat-bubble-user">Rename my trip photos by city name</div>
         </div>
-        <div class="preview-acts">
-          <button class="act">Cancel</button>
-          <button class="act act-ok">Rename all 200</button>
+        <div class="chat-row chat-row-bot">
+          <div class="chat-bubble chat-bubble-bot">
+            <strong class="chat-bot-title">Preview of new names</strong>
+            <p class="chat-bot-body">IMG_0001.jpg → Fukuoka_IMG_0001.jpg<br>IMG_0002.jpg → Fukuoka_IMG_0002.jpg<br>IMG_0089.jpg → Kyoto_IMG_0089.jpg<br><span class="story-dim">…and 197 more</span></p>
+            <div class="chat-actions" role="group" aria-label="Choices">
+              <span class="chat-pill">Cancel</span>
+              <span class="chat-pill chat-pill-secondary">Show me first</span>
+              <span class="chat-pill chat-pill-primary">Go ahead</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="insight r"><p>Before, batch renaming required knowing how to write scripts. <em>Hotate does it in one sentence, with a full preview before touching anything.</em></p></div>
+  <div class="insight r"><p>Big batches need a dress rehearsal. <em>Hotate shows the outcome before changing a single file.</em></p></div>
 
   <!-- 05 -->
   <p class="sc-lbl">05 / 05</p>
-  <h3 class="sc-title">Find what's filling up your storage</h3>
-  <p class="sc-desc">Your Mac says "storage almost full." You don't know what's using it.</p>
+  <h3 class="sc-title">Find what’s filling up your storage</h3>
+  <p class="sc-desc">Your Mac says “storage almost full.” You don’t know what’s using it.</p>
   <div class="pair r">
-    <div class="cb">
-      <div class="cb-head"><span class="badge-b">Before</span><span class="cb-note">A wall of numbers with no explanation of what's safe to delete.</span></div>
-      <div class="cb-body">
-        <span class="rp">$ </span><span class="rc">du -sh ~/* | sort -rh | head -10</span>
-        <span class="ro">54G  /Users/dan/Library</span>
-        <span class="ro">22G  /Users/dan/Downloads</span>
-        <span class="ro">14G  /Users/dan/Pictures</span>
-        <span class="rk">← What's Library? Can I delete it? Is it safe?</span>
+    <div class="story-before">
+      <div class="story-before-head"><span class="story-badge">Without Hotate</span></div>
+      <div class="story-before-body">
+        <p>Tools return giant tables of folder sizes and system paths. You’re left guessing what’s safe to move or delete — and what must stay untouched.</p>
       </div>
     </div>
-    <div class="ca">
-      <div class="ca-head"><span class="badge-a">Hotate</span><span class="ca-note">Tells you what each thing is and whether it's safe to remove.</span></div>
-      <div class="ca-body"><span class="hp">~</span><span class="hc">what's taking up the most space?</span></div>
-      <div class="preview">
-        <div class="preview-title">Your biggest folders</div>
-        <div class="preview-body">
-          📥 Downloads — 22 GB — old zip files from 2024<br>
-          🌸 Pictures/Japan Trip — 14 GB — your travel photos<br>
-          🎬 Movies — 9 GB — 3 video files<br><br>
-          ⚠ System files (54 GB) — do not delete these
+    <div class="story-after">
+      <div class="story-after-head"><span class="story-badge story-badge-hotate">With Hotate</span></div>
+      <div class="story-after-thread">
+        <div class="chat-row chat-row-user">
+          <div class="chat-bubble chat-bubble-user">What’s taking up the most space?</div>
         </div>
-        <div class="preview-acts">
-          <button class="act act-ok">Help me clean Downloads</button>
-          <button class="act">Show more</button>
+        <div class="chat-row chat-row-bot">
+          <div class="chat-bubble chat-bubble-bot">
+            <strong class="chat-bot-title">Your biggest folders</strong>
+            <p class="chat-bot-body">Downloads — 22 GB — older zip files<br>Pictures / Japan Trip — 14 GB — travel photos<br>Movies — 9 GB — a few large videos<br><br><em>System storage — leave this alone; it keeps macOS healthy.</em></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="insight r"><p>Before, the numbers were there but the meaning wasn't. <em>Hotate tells you what's safe to delete and what to leave alone.</em></p></div>
+  <div class="insight r"><p>Numbers without meaning don’t help anyone. <em>Hotate turns storage into sentences you can act on.</em></p></div>
 </section>
 
 <div class="divider" style="margin:0;"></div>
@@ -270,7 +308,7 @@
         <li>Move, copy, delete, and organise files</li>
         <li>Open and run programs and websites</li>
         <li>Shows you what will happen before anything is deleted</li>
-        <li>All four visual styles included</li>
+        <li>Four calm visual themes included</li>
       </ul>
     </div>
     <div class="tier-card featured r">
@@ -350,6 +388,7 @@
       <a href="https://github.com/craftbydan/Hotate/releases" class="footer-dl">Download Hotate — it's free</a>
     </div>
     <div class="footer-links">
+      <a href="/app.html" class="footer-link">Chat</a>
       <a href="https://github.com/craftbydan/Hotate" class="footer-link">GitHub</a>
       <a href="https://github.com/craftbydan/Hotate#readme" class="footer-link">Docs</a>
       <a href="https://twitter.com/craftbydan" class="footer-link">Twitter</a>

@@ -2,6 +2,8 @@
  * Machine context for cmdgen: cwd, OS, PATH summary, common CLI tools (which + optional versions).
  */
 import { spawnSync } from 'node:child_process'
+import { readdirSync } from 'node:fs'
+import path from 'node:path'
 import os from 'node:os'
 
 /** @type {readonly string[]} */
@@ -77,6 +79,33 @@ function tryVersion(cmd, args = ['--version']) {
   return line.length > 140 ? `${line.slice(0, 137)}…` : line
 }
 
+/**
+ * Shallow cwd names so the model (and fit resolver) can map "that folder" → real entry.
+ * @param {string} cwd
+ * @param {number} max
+ * @returns {string[]}
+ */
+export function readShallowCwdListing(cwd, max = 48) {
+  try {
+    const entries = readdirSync(cwd, { withFileTypes: true })
+    /** @type {string[]} */
+    const dirs = []
+    /** @type {string[]} */
+    const files = []
+    for (const e of entries) {
+      const n = e.name
+      if (n === '.' || n === '..') continue
+      if (e.isDirectory()) dirs.push(`${n}/`)
+      else if (e.isFile()) files.push(n)
+    }
+    dirs.sort()
+    files.sort()
+    return [...dirs, ...files].slice(0, max)
+  } catch {
+    return []
+  }
+}
+
 function summarizePath(pathStr) {
   if (!pathStr || !pathStr.trim()) {
     return { count: 0, head: [], rawLength: 0 }
@@ -90,10 +119,10 @@ function summarizePath(pathStr) {
 }
 
 /**
- * @param {{ versions?: boolean }} [opts]
+ * @param {{ versions?: boolean, cwdListing?: boolean, cwdListingMax?: number }} [opts]
  */
 export function gatherMachineContext(opts = {}) {
-  const { versions = true } = opts
+  const { versions = true, cwdListing = false, cwdListingMax = 48 } = opts
   const pathStr = process.env.PATH || ''
   const pathInfo = summarizePath(pathStr)
 
@@ -120,8 +149,13 @@ export function gatherMachineContext(opts = {}) {
     .filter(([, p]) => p != null)
     .map(([n, p]) => `${n}→${p}`)
 
+  const cwdResolved = path.resolve(process.cwd())
+  const cwdEntries = cwdListing
+    ? readShallowCwdListing(cwdResolved, cwdListingMax)
+    : []
+
   return {
-    cwd: process.cwd(),
+    cwd: cwdResolved,
     home: os.homedir(),
     hostname: os.hostname(),
     platform: process.platform,
@@ -136,6 +170,7 @@ export function gatherMachineContext(opts = {}) {
     tools,
     toolVersions,
     toolsPresentList: present,
+    cwdEntries,
   }
 }
 
@@ -158,6 +193,11 @@ export function formatContextForPrompt(ctx) {
   if (verEntries.length) {
     lines.push(
       `- Versions: ${verEntries.map(([k, v]) => `${k}: ${v}`).join(' · ')}`
+    )
+  }
+  if (ctx.cwdEntries?.length) {
+    lines.push(
+      `- cwd entries (names in this folder only, max ${ctx.cwdEntries.length}): ${ctx.cwdEntries.join(', ')}`
     )
   }
   return lines.join('\n')

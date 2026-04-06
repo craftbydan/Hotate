@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="menubar-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Hotate</title>
+<link rel="stylesheet" href="../../hotate.css">
+</head>
+<body class="app-body menubar-body">
+
+<header class="menubar-header menubar-drag-region" title="Drag to move the window">
+  <div class="menubar-brand">
+    <span class="menubar-drag-grip" aria-hidden="true"></span>
+    <div class="menubar-brand-stack">
+      <div class="menubar-brand-row">
+        <span class="menubar-brand-name">Hotate</span>
+        <span class="menubar-brand-tag" id="folder-tag">Planner</span>
+      </div>
+      <div class="menubar-path-header" id="header-path" hidden></div>
+    </div>
+  </div>
+  <button class="menubar-settings-btn" id="settings-btn" aria-label="Settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+  </button>
+</header>
+
+<main class="menubar-main-container">
+  <!-- Chat View -->
+  <div class="menubar-view is-active" id="chat-view">
+    <div class="try-thread menubar-thread" data-app-thread role="log" aria-live="polite" aria-relevant="additions"></div>
+
+    <div class="menubar-bottom">
+      <div class="try-chips menubar-chips" data-app-chips></div>
+      <form class="try-form menubar-form" data-app-form>
+        <label class="sr-only" for="app-input">Describe what you want</label>
+        <input id="app-input" class="try-input menubar-input" type="text" name="q" autocomplete="off" placeholder="What do you want to do?" data-app-input />
+        <button type="submit" class="try-send menubar-send">Run</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Settings View -->
+  <div class="menubar-view menubar-settings-view" id="settings-view">
+    <div class="menubar-settings-content">
+      <div class="menubar-settings-title">Context</div>
+      <div class="menubar-context-info">
+        <div class="menubar-context-item menubar-context-path-block">
+          <span class="menubar-context-label">Project folder</span>
+          <p class="menubar-path-lead">Planner reads and writes files here.</p>
+          <div class="menubar-path-row">
+            <code class="menubar-path-code" id="path-display" title="">…</code>
+            <button type="button" id="select-folder-btn" class="menubar-mini-btn menubar-copy-path-btn">Change</button>
+            <button type="button" id="copy-path-btn" class="menubar-mini-btn menubar-copy-path-btn">Copy</button>
+          </div>
+        </div>
+        <div class="menubar-context-item">
+          <span class="menubar-context-label">Ollama:</span>
+          <span class="menubar-context-val" id="ollama-status">Checking...</span>
+          <button id="start-ollama-btn" class="menubar-mini-btn" style="display:none">Start</button>
+        </div>
+      </div>
+      
+      <div class="menubar-settings-title" style="margin-top:16px">Theme</div>
+      <div class="menubar-theme-grid">
+        <div class="menubar-theme-opt" data-value="hotate">
+          <div class="menubar-theme-preview"></div>
+          <div class="menubar-theme-name">Hotate</div>
+        </div>
+        <div class="menubar-theme-opt" data-value="bauhaus">
+          <div class="menubar-theme-preview"></div>
+          <div class="menubar-theme-name">Bauhaus</div>
+        </div>
+        <div class="menubar-theme-opt" data-value="clam">
+          <div class="menubar-theme-preview"></div>
+          <div class="menubar-theme-name">Clam</div>
+        </div>
+        <div class="menubar-theme-opt" data-value="cockle">
+          <div class="menubar-theme-preview"></div>
+          <div class="menubar-theme-name">Cockle</div>
+        </div>
+      </div>
+
+      <div class="menubar-settings-actions">
+        <button id="update-btn" class="menubar-action-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+          Reload App
+        </button>
+        <button id="quit-btn" class="menubar-action-btn is-danger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Quit Hotate
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="../../app-page.js"></script>
+<script>
+  // Apply saved theme preference to the body
+  const urlParams = new URLSearchParams(window.location.search);
+  const theme = urlParams.get('theme') || localStorage.getItem('hotate-menubar-theme') || 'hotate';
+  document.body.setAttribute('data-theme', theme);
+
+  // Expose function to change theme dynamically
+  window.setMenubarTheme = (newTheme) => {
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('hotate-menubar-theme', newTheme);
+    
+    // Update active state in settings
+    document.querySelectorAll('.menubar-theme-opt').forEach(opt => {
+      opt.classList.toggle('is-active', opt.getAttribute('data-value') === newTheme);
+    });
+  };
+
+  // Initial active state
+  document.querySelectorAll('.menubar-theme-opt').forEach(opt => {
+    opt.classList.toggle('is-active', opt.getAttribute('data-value') === theme);
+  });
+
+  // Settings toggle
+  const settingsBtn = document.getElementById('settings-btn');
+  const chatView = document.getElementById('chat-view');
+  const settingsView = document.getElementById('settings-view');
+  
+  settingsBtn.onclick = (e) => {
+    e.stopPropagation();
+    const isSettings = settingsView.classList.contains('is-active');
+    if (isSettings) {
+      settingsView.classList.remove('is-active');
+      chatView.classList.add('is-active');
+      settingsBtn.classList.remove('is-active');
+    } else {
+      chatView.classList.remove('is-active');
+      settingsView.classList.add('is-active');
+      settingsBtn.classList.add('is-active');
+    }
+  };
+
+  // Theme selection
+  document.querySelectorAll('.menubar-theme-opt').forEach(opt => {
+    opt.onclick = () => {
+      const val = opt.getAttribute('data-value');
+      window.setMenubarTheme(val);
+      // Auto close after theme change
+      settingsView.classList.remove('is-active');
+      chatView.classList.add('is-active');
+      settingsBtn.classList.remove('is-active');
+    };
+  });
+
+  // Fetch context and handle Ollama
+  const pathDisplay = document.getElementById('path-display');
+  const headerPath = document.getElementById('header-path');
+  const copyPathBtn = document.getElementById('copy-path-btn');
+  const selectFolderBtn = document.getElementById('select-folder-btn');
+  const folderTag = document.getElementById('folder-tag');
+  const ollamaStatus = document.getElementById('ollama-status');
+  const startOllamaBtn = document.getElementById('start-ollama-btn');
+
+  let lastPathFriendly = '';
+
+  function addWelcomeMessage(ctx, friendly) {
+    const thread = document.querySelector('[data-app-thread]');
+    if (!thread) return;
+    
+    // Clear chat thread when switching folders
+    thread.innerHTML = '';
+    
+    const welcome = document.createElement('div');
+    welcome.className = 'chat-row chat-row-bot';
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble chat-bubble-bot welcome-bubble';
+    const title = document.createElement('span');
+    title.className = 'chat-bot-title';
+    title.style.marginBottom = '2px';
+    title.textContent = 'Hotate';
+    const p = document.createElement('p');
+    p.className = 'chat-bot-body';
+    p.style.fontSize = '12px';
+    p.append('Working in ');
+    const strong = document.createElement('strong');
+    strong.textContent = friendly || ctx.folder || 'this folder';
+    if (ctx.cwd) strong.title = ctx.cwd;
+    p.appendChild(strong);
+    p.append('.');
+    bubble.append(title, p);
+    welcome.appendChild(bubble);
+    thread.appendChild(welcome);
+  }
+
+  const updateContext = async () => {
+    if (window.hotate && window.hotate.getContext) {
+      const ctx = await window.hotate.getContext();
+      const friendly = ctx.pathFriendly || ctx.cwd || '';
+      const short = ctx.pathShort || ctx.folder || '…';
+      
+      const changed = lastPathFriendly && lastPathFriendly !== friendly;
+      lastPathFriendly = friendly;
+
+      pathDisplay.innerText = friendly;
+      pathDisplay.title = ctx.cwd || friendly;
+
+      folderTag.innerText = `• ${ctx.folder}`;
+      if (headerPath && friendly) {
+        headerPath.hidden = false;
+        headerPath.innerText = short;
+        headerPath.title = friendly;
+      }
+
+      ollamaStatus.innerText = ctx.ollama ? 'Running' : 'Offline';
+      ollamaStatus.className = ctx.ollama ? 'menubar-context-val is-online' : 'menubar-context-val is-offline';
+      startOllamaBtn.style.display = ctx.ollama ? 'none' : 'inline-block';
+      
+      // If thread is empty or folder changed, add a welcome message
+      const thread = document.querySelector('[data-app-thread]');
+      if (thread && (thread.children.length === 0 || changed)) {
+        addWelcomeMessage(ctx, friendly);
+      }
+    }
+  };
+
+  selectFolderBtn.onclick = async (e) => {
+    e.stopPropagation();
+    if (window.hotate && window.hotate.selectFolder) {
+      const newPath = await window.hotate.selectFolder();
+      if (newPath) {
+        await updateContext();
+        // Auto switch back to chat view
+        settingsView.classList.remove('is-active');
+        chatView.classList.add('is-active');
+        settingsBtn.classList.remove('is-active');
+      }
+    }
+  };
+
+  copyPathBtn.onclick = async (e) => {
+    e.stopPropagation();
+    const full = pathDisplay.title || lastPathFriendly;
+    if (window.hotate && window.hotate.copyText && full) {
+      await window.hotate.copyText(full);
+      const prev = copyPathBtn.innerText;
+      copyPathBtn.innerText = 'Copied';
+      setTimeout(() => { copyPathBtn.innerText = prev; }, 1600);
+    }
+  };
+
+  updateContext();
+  setInterval(updateContext, 5000); // Check every 5s
+
+  startOllamaBtn.onclick = async () => {
+    startOllamaBtn.innerText = 'Starting...';
+    startOllamaBtn.disabled = true;
+    if (window.hotate && window.hotate.startOllama) {
+      await window.hotate.startOllama();
+      // Wait a few seconds then update
+      setTimeout(updateContext, 2000);
+    }
+  };
+
+  const updateBtn = document.getElementById('update-btn');
+  updateBtn.onclick = () => {
+    if (window.hotate && window.hotate.update) {
+      window.hotate.update();
+    }
+  };
+
+  const quitBtn = document.getElementById('quit-btn');
+  quitBtn.onclick = () => {
+    if (window.hotate && window.hotate.quit) {
+      window.hotate.quit();
+    }
+  };
+</script>
+</body>
+</html>

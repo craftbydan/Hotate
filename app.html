@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotate chat — 帆立</title>
+<meta name="description" content="Tell Hotate what you want in plain language. Chat-first — no terminal.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/hotate.css">
+</head>
+<body class="app-body">
+
+<header class="app-header">
+  <a href="/" class="app-home" aria-label="Back to Hotate home">
+    <span class="nav-jp">帆立</span>
+    <span class="app-home-sub">home</span>
+  </a>
+  <p class="app-header-note" data-app-status></p>
+</header>
+
+<main class="app-main">
+  <div class="app-wrap">
+    <h1 class="app-title">What would you like to do?</h1>
+    <p class="app-lead">Type a full sentence. We’ll suggest a clear next step for <em>your</em> computer — same smarts as Hotate, in a simple chat.</p>
+
+    <div class="try-panel app-chat-panel">
+      <div class="try-panel-head">
+        <span class="try-panel-title">Hotate</span>
+        <span class="try-panel-badge">Chat</span>
+      </div>
+      <div class="try-thread app-thread" data-app-thread role="log" aria-live="polite" aria-relevant="additions"></div>
+      <p class="try-hint">Try one of these:</p>
+      <div class="try-chips" data-app-chips></div>
+      <form class="try-form" data-app-form>
+        <label class="sr-only" for="app-input">Describe what you want</label>
+        <input id="app-input" class="try-input" type="text" name="q" autocomplete="off" placeholder="e.g. List files in my Downloads folder…" data-app-input />
+        <button type="submit" class="try-send">Send</button>
+      </form>
+      <p class="try-footnote app-foot-api">Planner runs on this machine when you use <code class="app-inline-code">npm run dev</code>. On a static host, open Hotate locally for full planning.</p>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="/app-page.js"></script>
+</body>
+</html>

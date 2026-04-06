@@ -1,0 +1,179 @@
+/* ——— Desktop & tablet ——— */
+@media (min-width: 720px) {
+  :root { --gutter: 32px; }
+  .divider {
+    margin-left: max(var(--gutter), calc((100% - var(--content)) / 2));
+    margin-right: max(var(--gutter), calc((100% - var(--content)) / 2));
+  }
+  nav,
+  .hero,
+  .how,
+  .try-sect,
+  .ba-section,
+  .tiers,
+  .ocean,
+  footer {
+    padding-left: max(var(--gutter), calc((100% - var(--content)) / 2));
+    padding-right: max(var(--gutter), calc((100% - var(--content)) / 2));
+  }
+  .themes-sect {
+    padding-left: max(var(--gutter), calc((100% - var(--content)) / 2));
+    padding-right: max(var(--gutter), calc((100% - var(--content)) / 2));
+  }
+  .themes-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .themes-scroll {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 900px) {
+  :root { --gutter: 40px; }
+  .nav-links { display: flex; }
+}
+
+@media (min-width: 960px) {
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 440px);
+    grid-template-rows: auto auto;
+    column-gap: clamp(40px, 5vw, 72px);
+    row-gap: 20px;
+    align-items: start;
+    padding-top: 80px;
+    padding-bottom: 88px;
+    min-height: min(100svh, 900px);
+  }
+  .hero-lead { grid-column: 1; grid-row: 1; min-width: 0; align-self: end; }
+  .hero-btns {
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    align-self: start;
+  }
+  .hero-chat {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    margin-bottom: 0;
+    align-self: center;
+  }
+  .hero-kanji {
+    font-size: min(28vw, 280px);
+    right: clamp(-20px, 8vw, 40px);
+  }
+  .hero-title {
+    font-size: clamp(44px, 4.5vw, 58px);
+  }
+  .hero-sub { font-size: 16px; max-width: 38ch; }
+  .btn-pri,
+  .btn-sec {
+    width: auto;
+    min-width: 220px;
+    padding-inline: 24px;
+  }
+
+  .how {
+    display: grid;
+    grid-template-columns: minmax(260px, 380px) minmax(0, 1fr);
+    column-gap: clamp(48px, 6vw, 80px);
+    align-items: start;
+  }
+  .how > .s-label { grid-column: 1 / -1; }
+  .how > .how-quote {
+    grid-column: 1;
+    grid-row: 2 / 6;
+    margin-bottom: 0;
+    font-size: clamp(22px, 2.1vw, 26px);
+    line-height: 1.72;
+    position: sticky;
+    top: 88px;
+    align-self: start;
+    max-width: 32ch;
+  }
+  .how > .how-item:nth-child(3) { grid-column: 2; grid-row: 2; }
+  .how > .how-item:nth-child(4) { grid-column: 2; grid-row: 3; }
+  .how > .how-item:nth-child(5) { grid-column: 2; grid-row: 4; }
+  .how > .how-item:nth-child(6) { grid-column: 2; grid-row: 5; }
+  .how-body h3 { font-size: 17px; }
+  .how-body p { font-size: 14px; }
+
+  .ba-intro { font-size: clamp(30px, 3.2vw, 40px); }
+  .sc-title { font-size: 20px; }
+  .ba-sub { font-size: 14px; max-width: 48ch; }
+
+  .pair {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 20px;
+  }
+  .pair > .story-before,
+  .pair > .story-after {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tier-cards {
+    flex-direction: row;
+    gap: 16px;
+  }
+  .tier-card {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .themes-sect .themes-scroll {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding-bottom: 4px;
+  }
+  .th-card {
+    min-width: 0;
+    height: 260px;
+    scroll-snap-align: unset;
+  }
+
+  .ocean-inner {
+    display: grid;
+    grid-template-columns: 1fr minmax(200px, 280px);
+    gap: 48px;
+    align-items: end;
+  }
+  .ocean-text .s-label { margin-bottom: 20px; }
+  .ocean-title { font-size: 28px; }
+  .ocean-body { font-size: 14px; max-width: 52ch; margin-bottom: 0; }
+  .ocean-stat { margin-bottom: 0; }
+
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 28px;
+  }
+  .footer-cta {
+    margin-bottom: 0;
+    text-align: left;
+    flex: 1;
+    font-size: clamp(22px, 2.2vw, 28px);
+    max-width: 28ch;
+  }
+  .footer-dl {
+    margin-bottom: 0;
+    flex-shrink: 0;
+    min-width: 260px;
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root { --gutter: 48px; --content: 1120px; }
+}

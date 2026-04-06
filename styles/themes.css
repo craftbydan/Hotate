@@ -1,0 +1,68 @@
+/* THEMES - Brand Palette Overrides */
+[data-theme="hotate"] .chat-bubble-user,
+[data-theme="hotate"] .menubar-send,
+[data-theme="hotate"] .try-send,
+[data-theme="hotate"] .nav-btn,
+[data-theme="hotate"] .btn-pri,
+[data-theme="hotate"] .footer-dl {
+  background-color: #7c3b1e !important;
+}
+[data-theme="hotate"] .chat-bot-title,
+[data-theme="hotate"] .nav-jp,
+[data-theme="hotate"] .s-label,
+[data-theme="hotate"] .how-n,
+[data-theme="hotate"] .ba-intro em,
+[data-theme="hotate"] .footer-cta em {
+  color: #7c3b1e !important;
+}
+
+[data-theme="bauhaus"] .chat-bubble-user,
+[data-theme="bauhaus"] .menubar-send,
+[data-theme="bauhaus"] .try-send,
+[data-theme="bauhaus"] .nav-btn,
+[data-theme="bauhaus"] .btn-pri,
+[data-theme="bauhaus"] .footer-dl {
+  background-color: #cc2200 !important;
+}
+[data-theme="bauhaus"] .chat-bot-title,
+[data-theme="bauhaus"] .nav-jp,
+[data-theme="bauhaus"] .s-label,
+[data-theme="bauhaus"] .how-n,
+[data-theme="bauhaus"] .ba-intro em,
+[data-theme="bauhaus"] .footer-cta em {
+  color: #cc2200 !important;
+}
+
+[data-theme="clam"] .chat-bubble-user,
+[data-theme="clam"] .menubar-send,
+[data-theme="clam"] .try-send,
+[data-theme="clam"] .nav-btn,
+[data-theme="clam"] .btn-pri,
+[data-theme="clam"] .footer-dl {
+  background-color: #909088 !important;
+}
+[data-theme="clam"] .chat-bot-title,
+[data-theme="clam"] .nav-jp,
+[data-theme="clam"] .s-label,
+[data-theme="clam"] .how-n,
+[data-theme="clam"] .ba-intro em,
+[data-theme="clam"] .footer-cta em {
+  color: #909088 !important;
+}
+
+[data-theme="cockle"] .chat-bubble-user,
+[data-theme="cockle"] .menubar-send,
+[data-theme="cockle"] .try-send,
+[data-theme="cockle"] .nav-btn,
+[data-theme="cockle"] .btn-pri,
+[data-theme="cockle"] .footer-dl {
+  background-color: #6050ee !important;
+}
+[data-theme="cockle"] .chat-bot-title,
+[data-theme="cockle"] .nav-jp,
+[data-theme="cockle"] .s-label,
+[data-theme="cockle"] .how-n,
+[data-theme="cockle"] .ba-intro em,
+[data-theme="cockle"] .footer-cta em {
+  color: #6050ee !important;
+}

@@ -2,22 +2,32 @@
   "name": "hotate",
   "private": true,
   "type": "module",
-  "description": "Hotate landing + CLI: hotate-cmd, hotate-intent, hotate-env (machine context: cwd, OS, PATH, installed tools)",
+  "description": "Hotate — friendly web experience + optional local tools (repl, cmd, intent, env)",
   "scripts": {
     "dev": "vite",
     "start": "vite",
+    "app": "vite --open /app.html",
     "build": "vite build",
     "preview": "vite preview",
+    "menubar": "pkill -f 'menubar/main.cjs' || true; env -u ELECTRON_RUN_AS_NODE electron menubar/main.cjs",
+    "menubar:kill": "pkill -f 'menubar/main.cjs' || true",
+    "icons:menubar": "node scripts/render-menubar-icon.mjs",
+    "hotate": "node cli/interface-bin.mjs",
     "cmdgen": "node cli/bin.mjs",
     "intent": "node cli/classify-bin.mjs",
     "envctx": "node cli/context-bin.mjs"
   },
   "bin": {
+    "hotate": "cli/interface-bin.mjs",
     "hotate-cmd": "cli/bin.mjs",
     "hotate-intent": "cli/classify-bin.mjs",
-    "hotate-env": "cli/context-bin.mjs"
+    "hotate-env": "cli/context-bin.mjs",
+    "hotate-menubar": "menubar/cli.mjs"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "electron": "^34.5.8",
+    "menubar": "^9.5.2",
     "vite": "^5.4.21"
   }
 }

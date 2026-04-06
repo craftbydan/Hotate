@@ -1,0 +1,27 @@
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 18px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(250,247,241,0.97);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-brand {
+  display: flex; align-items: baseline; gap: 9px;
+  text-decoration: none; color: inherit; flex-shrink: 0;
+}
+.nav-jp  { font-family: 'Noto Serif JP', serif; font-weight: 200; font-size: 16px; color: var(--rust); }
+.nav-en  { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.22em; color: var(--ink); opacity: 0.30; text-transform: uppercase; }
+.nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.nav-links { display: none; align-items: center; gap: clamp(16px, 2.5vw, 28px); }
+.nav-link {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none; opacity: 0.42;
+}
+.nav-link:hover { opacity: 1; }
+.nav-btn {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--paper); background: var(--ink); padding: 8px 14px; border-radius: 2px; text-decoration: none;
+  white-space: nowrap;
+}

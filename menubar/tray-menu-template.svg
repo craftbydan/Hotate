@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="18" height="18">
+  <!-- 
+    Apple Standard Menu Bar Icon 
+    - 18x18 pixel grid
+    - Pure black for macOS Template processing
+    - Cutout mask for inner transparent elements
+  -->
+  <defs>
+    <mask id="cutout">
+      <rect width="18" height="18" fill="white" />
+      <!-- Terminal prompt > -->
+      <polyline points="5,6 8,9 5,12" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- Terminal cursor _ -->
+      <line x1="9.5" y1="12.5" x2="13" y2="12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" />
+    </mask>
+  </defs>
+  <rect x="1.5" y="3" width="15" height="12" rx="2.5" fill="#000000" mask="url(#cutout)" />
+</svg>
