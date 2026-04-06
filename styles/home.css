@@ -461,6 +461,10 @@ footer { padding:40px 24px 52px; background:var(--paper); border-top:1px solid v
 .footer-cta { font-family:'Noto Serif JP',serif; font-weight:200; font-size:22px; color:var(--ink); line-height:1.55; margin-bottom:22px; text-align:center; }
 .footer-cta em { font-style:normal; color:var(--rust); }
 .footer-dl { display:block; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--paper); background:var(--ink); padding:14px 20px; text-align:center; text-decoration:none; border-radius:2px; margin-bottom:18px; }
+a.footer-dl.hotate-dl-pending,
+a.btn-pri.hotate-dl-pending,
+a.nav-btn.hotate-dl-pending,
+a.try-cta-btn.hotate-dl-pending { opacity: 0.72; pointer-events: none; }
 .footer-links { display:flex; justify-content:center; gap:24px; margin-bottom:16px; }
 .footer-link { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink); text-decoration:none; opacity:0.28; }
 .footer-note { font-family:'DM Mono',monospace; font-size:9px; color:var(--ink); opacity:0.2; text-align:center; letter-spacing:0.1em; }
