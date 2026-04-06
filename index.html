@@ -39,13 +39,12 @@
   </a>
   <div class="nav-right">
     <div class="nav-links" aria-label="Page sections">
-      <a href="/app.html" class="nav-link">Chat</a>
       <a href="#how" class="nav-link">How</a>
       <a href="#demo" class="nav-link">Stories</a>
       <a href="#pricing" class="nav-link">Pricing</a>
       <a href="#themes" class="nav-link">Themes</a>
     </div>
-    <a href="/app.html" class="nav-btn">Open chat</a>
+    <a href="#download" class="nav-btn">Download</a>
   </div>
 </nav>
 
@@ -90,22 +89,39 @@
     </div>
   </div>
   <div class="hero-btns">
-    <a href="/app.html" class="btn-pri">Open the chat</a>
-    <a href="#download" class="btn-sec">Download for your computer</a>
+    <a href="#download" class="btn-pri">Download for your computer</a>
+    <a href="#features" class="btn-sec">See what it can do</a>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- CHAT CTA — real chat lives on app.html -->
-<section class="try-sect" id="try" aria-labelledby="try-heading">
+<!-- FEATURES CTA -->
+<section class="try-sect" id="features" aria-labelledby="features-heading">
   <div class="try-max">
-    <div class="s-label">Chat — チャット</div>
-    <h2 class="try-heading r" id="try-heading">One place to say what you need</h2>
-    <p class="try-lead r">Hotate’s chat is separate from this page: full sentences in, clear suggested steps out. No command line, no terminal window — just conversation.</p>
+    <div class="s-label">Capabilities — 機能</div>
+    <h2 class="try-heading r" id="features-heading">What Hotate can do today</h2>
+    <p class="try-lead r">We are constantly adding new native skills. Here are the core things Hotate's multi-turn agent can handle automatically right now:</p>
     <div class="try-cta-row r">
-      <a href="/app.html" class="btn-pri try-cta-btn">Open Hotate chat</a>
-      <p class="try-cta-note">With <em>npm run dev</em>, the chat can call the same planner on your computer. <a href="#download">Install</a> when you’re ready for more.</p>
+      <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+        <li style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink);">
+          <span style="display: inline-flex; justify-content: center; align-items: center; width: 24px; height: 24px; background: rgba(124, 59, 30, 0.1); color: var(--rust); border-radius: 50%; font-family: 'DM Mono', monospace; font-size: 10px;">✓</span>
+          List folders and read file contents natively
+        </li>
+        <li style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink);">
+          <span style="display: inline-flex; justify-content: center; align-items: center; width: 24px; height: 24px; background: rgba(124, 59, 30, 0.1); color: var(--rust); border-radius: 50%; font-family: 'DM Mono', monospace; font-size: 10px;">✓</span>
+          Check disk space and system availability
+        </li>
+        <li style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink);">
+          <span style="display: inline-flex; justify-content: center; align-items: center; width: 24px; height: 24px; background: rgba(124, 59, 30, 0.1); color: var(--rust); border-radius: 50%; font-family: 'DM Mono', monospace; font-size: 10px;">✓</span>
+          Write safe shell commands tailored to macOS or Linux
+        </li>
+        <li style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink);">
+          <span style="display: inline-flex; justify-content: center; align-items: center; width: 24px; height: 24px; background: rgba(124, 59, 30, 0.1); color: var(--rust); border-radius: 50%; font-family: 'DM Mono', monospace; font-size: 10px;">✓</span>
+          Provide interactive pre-flight checks before destructive commands
+        </li>
+      </ul>
+      <a href="#download" class="btn-pri try-cta-btn">Download Hotate</a>
     </div>
   </div>
 </section>
