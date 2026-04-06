@@ -18,21 +18,36 @@
   </a>
   <div class="nav-right">
     <div class="nav-links" aria-label="Page sections">
+      <a href="/functions.html" class="nav-link">Functions</a>
       <a href="/#how" class="nav-link">How</a>
       <a href="/#demo" class="nav-link">Stories</a>
       <a href="/#pricing" class="nav-link">Pricing</a>
+      <a href="/#themes" class="nav-link">Themes</a>
     </div>
     <a href="/#download" class="nav-btn">Download</a>
   </div>
 </nav>
 
-<section class="try-sect" style="min-height: 100svh; background: var(--paper);">
-  <div class="try-max" style="padding-top: 40px">
+<section class="try-sect" style="min-height: 100svh; background: var(--paper); padding-bottom: 96px;">
+  <div class="try-max" style="padding-top: 40px; max-width: 900px">
     <div class="s-label" style="opacity: 1">Functions — 機能</div>
     <h2 class="try-heading r on" style="font-size: clamp(32px, 5vw, 44px); margin-bottom: 16px;">Native Agent Functions</h2>
-    <p class="try-lead r on" style="max-width: 600px">Hotate uses a multi-turn LLM agent capable of calling native tools. Here are the core functions the agent can run securely on your machine today:</p>
+    <p class="try-lead r on" style="max-width: 600px">Hotate uses a multi-turn LLM agent capable of calling native tools. Here is how the agent works under the hood and the core functions it can run securely on your machine today.</p>
     
-    <div class="functions-table-wrap r on" style="margin-top: 48px">
+    <div class="insight r on" style="margin-top: 48px; margin-bottom: 48px; background: rgba(24, 20, 15, 0.03); border-color: var(--ink);">
+      <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 18px; color: var(--ink); margin-bottom: 12px;">The Agent Loop</h3>
+      <p style="font-size: 14px; line-height: 1.8; color: rgba(24, 20, 15, 0.7); margin-bottom: 16px;">When a user asks Hotate to do something, it doesn't just blindly generate a shell script. Instead, the language model operates in a loop:</p>
+      <ol style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: rgba(24, 20, 15, 0.7); display: flex; flex-direction: column; gap: 8px; margin-bottom: 0;">
+        <li>It reads the user's intent and the current working directory.</li>
+        <li>If it needs to understand the context (like checking if a file exists or seeing what is taking up space), it executes a <strong>Read-Only</strong> native tool (like <code>list_directory</code>).</li>
+        <li>It reads the tool's result directly from the filesystem.</li>
+        <li>Once it has enough context, it either replies with a text summary or calls the <strong>Action</strong> tool (<code>propose_shell_command</code>) to queue a command for the user to approve.</li>
+      </ol>
+    </div>
+
+    <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 24px; color: var(--ink); margin-bottom: 24px;" class="r on">Available Tools</h3>
+
+    <div class="functions-table-wrap r on" style="margin-top: 0">
       <table class="functions-table">
         <thead>
           <tr>
