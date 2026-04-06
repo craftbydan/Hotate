@@ -37,11 +37,22 @@
     <div class="insight r on" style="margin-top: 48px; margin-bottom: 48px; background: rgba(24, 20, 15, 0.03); border-color: var(--ink);">
       <h3 style="font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 18px; color: var(--ink); margin-bottom: 12px;">The Agent Loop</h3>
       <p style="font-size: 14px; line-height: 1.8; color: rgba(24, 20, 15, 0.7); margin-bottom: 16px;">When a user asks Hotate to do something, it doesn't just blindly generate a shell script. Instead, the language model operates in a loop:</p>
+      
+      <div style="background: rgba(255, 255, 255, 0.6); padding: 16px 20px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 24px; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--ink);">
+        <div style="margin-bottom: 8px; color: var(--rust);"><strong>[Turn 1] User Intent</strong>: "Delete all the heavy log files in this folder"</div>
+        <div style="margin-bottom: 8px;"><strong>LLM Thought</strong>: I need to see what files exist and how big they are first.</div>
+        <div style="margin-bottom: 16px; padding-left: 16px; border-left: 2px solid rgba(124, 59, 30, 0.2);">↳ Calls Tool: <code>list_directory(".")</code></div>
+
+        <div style="margin-bottom: 8px; color: rgba(46, 107, 62, 1);"><strong>[Turn 2] Tool Response</strong>: [FILE] server.log (2.1GB), [FILE] error.log (400MB)...</div>
+        <div style="margin-bottom: 8px;"><strong>LLM Thought</strong>: I see the logs. I'll propose the command to delete them.</div>
+        <div style="margin-bottom: 0; padding-left: 16px; border-left: 2px solid rgba(124, 59, 30, 0.2);">↳ Calls Tool: <code>propose_shell_command("rm server.log error.log")</code></div>
+      </div>
+
       <ol style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: rgba(24, 20, 15, 0.7); display: flex; flex-direction: column; gap: 8px; margin-bottom: 0;">
         <li>It reads the user's intent and the current working directory.</li>
-        <li>If it needs to understand the context (like checking if a file exists or seeing what is taking up space), it executes a <strong>Read-Only</strong> native tool (like <code>list_directory</code>).</li>
-        <li>It reads the tool's result directly from the filesystem.</li>
-        <li>Once it has enough context, it either replies with a text summary or calls the <strong>Action</strong> tool (<code>propose_shell_command</code>) to queue a command for the user to approve.</li>
+        <li>If it needs to understand the context (like checking if a file exists or seeing what is taking up space), it executes a <strong>Read-Only</strong> native Node.js tool (like <code>list_directory</code>). This avoids fragile shell-string parsing and OS inconsistencies.</li>
+        <li>It reads the tool's result directly from the filesystem and loops back to itself.</li>
+        <li>Once it has enough context, it either replies with a text summary or calls the <strong>Action</strong> tool (<code>propose_shell_command</code>) to securely queue a command for the user to approve in the UI.</li>
       </ol>
     </div>
 
